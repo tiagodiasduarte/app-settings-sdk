@@ -1,0 +1,14 @@
+<resources>
+    <string name="appsettings_title">App Settings</string>
+
+    <string name="appsettings_section_application">Application</string>
+    <string name="appsettings_label_version_name">Version name</string>
+    <string name="appsettings_label_version_code">Version code</string>
+    <string name="appsettings_label_app_id">App id</string>
+
+    <string name="appsettings_section_device">Device</string>
+    <string name="appsettings_label_model">Model</string>
+    <string name="appsettings_label_android_version">Android version</string>
+
+    <string name="appsettings_value_unknown">Unknown</string>
+</resources>

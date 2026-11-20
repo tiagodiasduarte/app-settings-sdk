@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "App Settings Sdk"
 include(":app")
+include(":sdk")

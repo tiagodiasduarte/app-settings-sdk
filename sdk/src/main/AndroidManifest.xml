@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name=".presentation.AppSettingsActivity"
+            android:exported="false"
+            android:label="@string/appsettings_title"
+            android:theme="@style/appsettings_Theme" />
+    </application>
+
+</manifest>

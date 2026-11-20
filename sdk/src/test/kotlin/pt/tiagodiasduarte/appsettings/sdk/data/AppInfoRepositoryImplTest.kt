@@ -29,14 +29,28 @@ class AppInfoRepositoryImplTest {
 
     @Test
     @Config(sdk = [33])
-    fun `reads the host package info on API 33 and above`() {
-        assertEquals(expected(), AppInfoRepositoryImpl(context).getAppInfo())
+    fun `given an installed host package on API 33 when app info is read then it returns the package info`() {
+        // Given
+        val repository = AppInfoRepositoryImpl(context)
+
+        // When
+        val info = repository.getAppInfo()
+
+        // Then
+        assertEquals(expected(), info)
     }
 
     @Test
     @Config(sdk = [32])
-    fun `reads the host package info below API 33`() {
-        assertEquals(expected(), AppInfoRepositoryImpl(context).getAppInfo())
+    fun `given an installed host package below API 33 when app info is read then it returns the package info`() {
+        // Given
+        val repository = AppInfoRepositoryImpl(context)
+
+        // When
+        val info = repository.getAppInfo()
+
+        // Then
+        assertEquals(expected(), info)
     }
 
     private fun expected() = AppInfo(applicationId = context.packageName, versionName = "2.3.0", versionCode = 230L)

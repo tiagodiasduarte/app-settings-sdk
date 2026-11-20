@@ -11,11 +11,14 @@ import org.junit.runner.RunWith
 class AppInfoRepositoryImplTest {
 
     @Test
-    fun readsInfoOfTheRunningPackage() {
+    fun givenTheRunningPackage_whenAppInfoIsRead_thenItReturnsItsIdAndVersionCode() {
+        // Given
         val context = InstrumentationRegistry.getInstrumentation().targetContext
 
+        // When
         val info = AppInfoRepositoryImpl(context).getAppInfo()
 
+        // Then
         assertEquals(context.packageName, info.applicationId)
         assertTrue("version code should be non-negative", info.versionCode >= 0)
     }

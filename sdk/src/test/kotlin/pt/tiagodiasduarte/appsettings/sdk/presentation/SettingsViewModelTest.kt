@@ -47,66 +47,98 @@ class SettingsViewModelTest {
     )
 
     @Test
-    fun `starts empty until loaded`() {
-        assertTrue(viewModel().uiState.value.sections.isEmpty())
+    fun `given loading has not run when the view model is created then it has no sections`() {
+        // Given
+        val app = AppInfo("com.example.host", "2.3.0", 230L)
+
+        // When
+        val vm = viewModel(app = app)
+
+        // Then
+        assertTrue(vm.uiState.value.sections.isEmpty())
     }
 
     @Test
-    fun `sections are Application then Device`() = runTest(dispatcher) {
-        val vm = viewModel()
-        advanceUntilIdle()
+    fun `given app and device info when loading finishes then sections are Application then Device`() =
+        runTest(dispatcher) {
+            // Given
+            val app = AppInfo("com.example.host", "2.3.0", 230L)
 
-        assertEquals(
-            listOf(R.string.appsettings_section_application, R.string.appsettings_section_device),
-            vm.uiState.value.sections.map { it.titleRes },
-        )
-    }
+            // When
+            val vm = viewModel(app = app).also { advanceUntilIdle() }
 
-    @Test
-    fun `application section shows host app values`() = runTest(dispatcher) {
-        val vm = viewModel()
-        advanceUntilIdle()
-
-        assertEquals(
-            listOf(
-                InfoRowUi(R.string.appsettings_label_version_name, UiText.Plain("2.3.0")),
-                InfoRowUi(R.string.appsettings_label_version_code, UiText.Plain("230")),
-                InfoRowUi(R.string.appsettings_label_app_id, UiText.Plain("com.example.host")),
-            ),
-            vm.uiState.value.sections[0].rows,
-        )
-    }
+            // Then
+            assertEquals(
+                listOf(R.string.appsettings_section_application, R.string.appsettings_section_device),
+                vm.uiState.value.sections.map { it.titleRes },
+            )
+        }
 
     @Test
-    fun `missing version name maps to unknown placeholder`() = runTest(dispatcher) {
-        val vm = viewModel(app = AppInfo("com.example.host", null, 1L))
-        advanceUntilIdle()
+    fun `given host app info when loading finishes then the application section shows its values`() =
+        runTest(dispatcher) {
+            // Given
+            val app = AppInfo("com.example.host", "2.3.0", 230L)
 
-        assertEquals(
-            UiText.Resource(R.string.appsettings_value_unknown),
-            vm.uiState.value.sections[0].rows[0].value,
-        )
-    }
+            // When
+            val vm = viewModel(app = app).also { advanceUntilIdle() }
+
+            // Then
+            assertEquals(
+                listOf(
+                    InfoRowUi(R.string.appsettings_label_version_name, UiText.Plain("2.3.0")),
+                    InfoRowUi(R.string.appsettings_label_version_code, UiText.Plain("230")),
+                    InfoRowUi(R.string.appsettings_label_app_id, UiText.Plain("com.example.host")),
+                ),
+                vm.uiState.value.sections[0].rows,
+            )
+        }
 
     @Test
-    fun `large version code is shown in full`() = runTest(dispatcher) {
-        val vm = viewModel(app = AppInfo("com.example.host", "1.0", 3_000_000_000L))
-        advanceUntilIdle()
+    fun `given a missing version name when loading finishes then it shows the unknown placeholder`() =
+        runTest(dispatcher) {
+            // Given
+            val app = AppInfo("com.example.host", null, 1L)
 
-        assertEquals(UiText.Plain("3000000000"), vm.uiState.value.sections[0].rows[1].value)
-    }
+            // When
+            val vm = viewModel(app = app).also { advanceUntilIdle() }
+
+            // Then
+            assertEquals(
+                UiText.Resource(R.string.appsettings_value_unknown),
+                vm.uiState.value.sections[0].rows[0].value,
+            )
+        }
 
     @Test
-    fun `device section shows formatted model and android version`() = runTest(dispatcher) {
-        val vm = viewModel()
-        advanceUntilIdle()
+    fun `given a version code larger than 32 bits when loading finishes then it is shown in full`() =
+        runTest(dispatcher) {
+            // Given
+            val app = AppInfo("com.example.host", "1.0", 3_000_000_000L)
 
-        assertEquals(
-            listOf(
-                InfoRowUi(R.string.appsettings_label_model, UiText.Plain("Samsung SM-S918B")),
-                InfoRowUi(R.string.appsettings_label_android_version, UiText.Plain("15 (API 35)")),
-            ),
-            vm.uiState.value.sections[1].rows,
-        )
-    }
+            // When
+            val vm = viewModel(app = app).also { advanceUntilIdle() }
+
+            // Then
+            assertEquals(UiText.Plain("3000000000"), vm.uiState.value.sections[0].rows[1].value)
+        }
+
+    @Test
+    fun `given device info when loading finishes then the device section shows model and android version`() =
+        runTest(dispatcher) {
+            // Given
+            val device = DeviceInfo("samsung", "SM-S918B", "15", 35)
+
+            // When
+            val vm = viewModel(device = device).also { advanceUntilIdle() }
+
+            // Then
+            assertEquals(
+                listOf(
+                    InfoRowUi(R.string.appsettings_label_model, UiText.Plain("Samsung SM-S918B")),
+                    InfoRowUi(R.string.appsettings_label_android_version, UiText.Plain("15 (API 35)")),
+                ),
+                vm.uiState.value.sections[1].rows,
+            )
+        }
 }

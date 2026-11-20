@@ -28,24 +28,30 @@ class AppSettingsTest {
     }
 
     @Test
-    fun opensFromActivityContextAndBackReturnsToHost() {
+    fun givenSettingsOpenedFromAnActivity_whenBackIsPressed_thenTheHostActivityIsResumed() {
+        // Given
         ActivityScenario.launch(HostActivity::class.java).use { scenario ->
             scenario.onActivity { AppSettings.open(it) }
             waitForSettingsScreen()
 
+            // When
             Espresso.pressBack()
 
+            // Then
             composeRule.waitUntil(TIMEOUT_MS) { scenario.state == Lifecycle.State.RESUMED }
         }
     }
 
     @Test
-    fun opensFromApplicationContext() {
+    fun givenTheApplicationContext_whenOpenIsCalled_thenTheSettingsScreenIsShown() {
+        // Given
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
 
+        // When
         AppSettings.open(appContext)
-        waitForSettingsScreen()
 
+        // Then
+        waitForSettingsScreen()
         Espresso.pressBackUnconditionally()
     }
 

@@ -12,14 +12,19 @@ class AndroidDeviceBuildSourceTest {
 
     @Test
     @Config(sdk = [34])
-    fun `reads the device fields from Build`() {
+    fun `given Build values on API 34 when the source is read then it returns those values`() {
+        // Given
         ShadowBuild.setManufacturer("Google")
         ShadowBuild.setModel("Pixel 8")
         ShadowBuild.setVersionRelease("14")
 
-        assertEquals("Google", AndroidDeviceBuildSource.manufacturer)
-        assertEquals("Pixel 8", AndroidDeviceBuildSource.model)
-        assertEquals("14", AndroidDeviceBuildSource.release)
-        assertEquals(34, AndroidDeviceBuildSource.sdkInt)
+        // When
+        val source = AndroidDeviceBuildSource
+
+        // Then
+        assertEquals("Google", source.manufacturer)
+        assertEquals("Pixel 8", source.model)
+        assertEquals("14", source.release)
+        assertEquals(34, source.sdkInt)
     }
 }

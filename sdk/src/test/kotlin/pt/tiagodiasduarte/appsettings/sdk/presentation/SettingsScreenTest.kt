@@ -50,13 +50,18 @@ class SettingsScreenTest {
         ),
     )
 
-    private fun setContent(uiState: SettingsUiState = state) =
+    private fun setContent(uiState: SettingsUiState) =
         composeRule.setContent { AppSettingsTheme(dynamicColor = false) { SettingsScreen(uiState) } }
 
     @Test
-    fun showsApplicationSectionBeforeDeviceSection() {
-        setContent()
+    fun `given application and device sections when the screen is shown then Application is above Device`() {
+        // Given
+        val uiState = state
 
+        // When
+        setContent(uiState)
+
+        // Then
         val appTop = composeRule.onNodeWithText("Application").assertIsDisplayed()
             .fetchSemanticsNode().boundsInRoot.top
         val deviceTop = composeRule.onNodeWithText("Device").assertIsDisplayed()
@@ -65,9 +70,14 @@ class SettingsScreenTest {
     }
 
     @Test
-    fun showsLabelsWithValues() {
-        setContent()
+    fun `given rows with values when the screen is shown then every label and value is displayed`() {
+        // Given
+        val uiState = state
 
+        // When
+        setContent(uiState)
+
+        // Then
         listOf(
             "Version name", "Unknown",
             "Version code", "230",
@@ -78,11 +88,15 @@ class SettingsScreenTest {
     }
 
     @Test
-    fun listScrollsToContentBeyondTheScreen() {
+    fun `given more rows than fit on screen when the list is scrolled then the last row is displayed`() {
+        // Given
         val manyRows = List(40) { InfoRowUi(R.string.appsettings_label_model, UiText.Plain("value $it")) }
         setContent(SettingsUiState(sections = listOf(SectionUi(R.string.appsettings_section_device, manyRows))))
 
+        // When
         composeRule.onNodeWithTag(SETTINGS_LIST_TAG).performScrollToNode(hasText("value 39"))
+
+        // Then
         composeRule.onNodeWithText("value 39").assertIsDisplayed()
     }
 }

@@ -17,32 +17,62 @@ class GetDeviceInfoUseCaseTest {
         DeviceInfo(manufacturer, model, release, api)
 
     @Test
-    fun `combines and capitalizes manufacturer when model does not include it`() {
-        val details = useCase(device("samsung", "SM-S918B"))()
+    fun `given a model without the manufacturer when the use case runs then it prefixes the capitalized maker`() {
+        // Given
+        val useCase = useCase(device("samsung", "SM-S918B"))
+
+        // When
+        val details = useCase()
+
+        // Then
         assertEquals("Samsung SM-S918B", details.model)
     }
 
     @Test
-    fun `does not repeat manufacturer already present in model`() {
-        val details = useCase(device("Google", "Google Pixel 8"))()
+    fun `given a model that starts with the manufacturer when the use case runs then it does not repeat it`() {
+        // Given
+        val useCase = useCase(device("Google", "Google Pixel 8"))
+
+        // When
+        val details = useCase()
+
+        // Then
         assertEquals("Google Pixel 8", details.model)
     }
 
     @Test
-    fun `manufacturer prefix match ignores case`() {
-        val details = useCase(device("google", "Google Pixel 8"))()
+    fun `given a manufacturer in a different case when the use case runs then the prefix match ignores case`() {
+        // Given
+        val useCase = useCase(device("google", "Google Pixel 8"))
+
+        // When
+        val details = useCase()
+
+        // Then
         assertEquals("Google Pixel 8", details.model)
     }
 
     @Test
-    fun `blank manufacturer falls back to model`() {
-        val details = useCase(device("", "Pixel 8"))()
+    fun `given a blank manufacturer when the use case runs then the model is used on its own`() {
+        // Given
+        val useCase = useCase(device("", "Pixel 8"))
+
+        // When
+        val details = useCase()
+
+        // Then
         assertEquals("Pixel 8", details.model)
     }
 
     @Test
-    fun `formats android release with api level`() {
-        val details = useCase(device("Google", "Pixel 8", release = "15", api = 35))()
+    fun `given a release and API level when the use case runs then the android version shows both`() {
+        // Given
+        val useCase = useCase(device("Google", "Pixel 8", release = "15", api = 35))
+
+        // When
+        val details = useCase()
+
+        // Then
         assertEquals("15 (API 35)", details.androidVersion)
     }
 }

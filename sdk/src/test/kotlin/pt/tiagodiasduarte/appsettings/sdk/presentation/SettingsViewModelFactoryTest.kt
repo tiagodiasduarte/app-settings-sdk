@@ -14,12 +14,15 @@ import pt.tiagodiasduarte.appsettings.sdk.di.SdkContainer
 class SettingsViewModelFactoryTest {
 
     @Test
-    fun `factory creates the view model from the SDK container`() {
+    fun `given the SDK container when the factory creates the view model then it has a ui state`() {
+        // Given
         val context = ApplicationProvider.getApplicationContext<Context>()
         val factory = SettingsViewModel.factory(SdkContainer(context))
 
+        // When
         val viewModel = ViewModelProvider.create(ViewModelStore(), factory)[SettingsViewModel::class]
 
+        // Then
         assertNotNull(viewModel.uiState.value)
     }
 }

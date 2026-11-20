@@ -14,15 +14,21 @@ Two modules:
 ```bash
 ./gradlew assembleDebug                 # build debug APK
 ./gradlew installDebug                  # install on connected device/emulator
-./gradlew test                          # JVM unit tests (sdk/src/test, app/src/test)
+./gradlew test                          # JVM unit tests (sdk/src/test, app/src/test), incl. Robolectric/Compose UI tests
 ./gradlew connectedAndroidTest          # instrumented tests (sdk/src/androidTest, app/src/androidTest), needs a device
 ./gradlew lint                          # Android lint
+./gradlew detekt                        # static analysis (config/detekt/detekt.yml)
+./gradlew :sdk:koverHtmlReport :sdk:koverVerify   # SDK coverage report and the 90% line/branch minimum
 
 # single test class / method
 ./gradlew :sdk:testDebugUnitTest --tests "pt.tiagodiasduarte.appsettings.sdk.presentation.SettingsViewModelTest"
 ./gradlew :sdk:testDebugUnitTest --tests "pt.tiagodiasduarte.appsettings.sdk.domain.usecase.GetDeviceInfoUseCaseTest"
 ./gradlew :sdk:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=pt.tiagodiasduarte.appsettings.sdk.AppSettingsTest
 ```
+
+CI (`.github/workflows/ci.yml`) runs on PRs into `develop` and `main`: build, unit tests with the coverage check, lint and detekt. The `🏁 Finish` job aggregates the result.
+
+Framework-dependent SDK code (`AppSettings.open`, PackageManager/`Build` access, the Compose screen) is unit tested with Robolectric so Kover can measure it; Kover excludes the Activity, `di` and `theme` packages and `@Composable`/`@Preview` functions.
 
 ## Build setup
 

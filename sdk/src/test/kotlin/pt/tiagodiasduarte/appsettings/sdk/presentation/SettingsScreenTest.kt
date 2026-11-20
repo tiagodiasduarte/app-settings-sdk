@@ -11,6 +11,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import pt.tiagodiasduarte.appsettings.sdk.R
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.InfoRowUi
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.SectionUi
@@ -18,6 +19,8 @@ import pt.tiagodiasduarte.appsettings.sdk.presentation.model.SettingsUiState
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.UiText
 import pt.tiagodiasduarte.appsettings.sdk.presentation.theme.AppSettingsTheme
 
+// Phone-sized screen, so every row of the default state fits without scrolling.
+@Config(qualifiers = "w411dp-h891dp")
 @RunWith(AndroidJUnit4::class)
 class SettingsScreenTest {
 
@@ -29,7 +32,10 @@ class SettingsScreenTest {
             SectionUi(
                 R.string.appsettings_section_application,
                 listOf(
-                    InfoRowUi(R.string.appsettings_label_version_name, UiText.Resource(R.string.appsettings_value_unknown)),
+                    InfoRowUi(
+                        R.string.appsettings_label_version_name,
+                        UiText.Resource(R.string.appsettings_value_unknown),
+                    ),
                     InfoRowUi(R.string.appsettings_label_version_code, UiText.Plain("230")),
                     InfoRowUi(R.string.appsettings_label_app_id, UiText.Plain("com.example.host")),
                 ),
@@ -62,8 +68,13 @@ class SettingsScreenTest {
     fun showsLabelsWithValues() {
         setContent()
 
-        listOf("Version name", "Unknown", "Version code", "230", "App id", "com.example.host", "Model", "Samsung SM-S918B", "Android version", "15 (API 35)")
-            .forEach { composeRule.onNodeWithText(it).assertIsDisplayed() }
+        listOf(
+            "Version name", "Unknown",
+            "Version code", "230",
+            "App id", "com.example.host",
+            "Model", "Samsung SM-S918B",
+            "Android version", "15 (API 35)",
+        ).forEach { composeRule.onNodeWithText(it).assertIsDisplayed() }
     }
 
     @Test

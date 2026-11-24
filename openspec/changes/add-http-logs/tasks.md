@@ -45,8 +45,8 @@
 
 ## 8. Sample app and docs
 
-- [ ] 8.1 Add a `qa` build type to `:app` (R8 enabled, debuggable), depend on `:sdk` for debug and QA and on `:sdk-no-op` for release, add the `INTERNET` permission, and add a button that makes a request through an `OkHttpClient` with `AppSettings.httpInterceptor(context) { ... }`. Verify that `./gradlew :app:assembleDebug :app:assembleQa :app:assembleRelease` succeeds
-- [ ] 8.2 Document the feature in `sdk/README.md`: variant wiring with `:sdk-no-op`, the DSL options and defaults, redaction, retention and limits, closing response bodies, and the on-device data caveat. Verify that the README snippet matches the sample app's code
+- [x] 8.1 Add a `qa` build type to `:app` (R8 enabled, debuggable), depend on `:sdk` for debug and QA and on `:sdk-no-op` for release, add the `INTERNET` permission, and add a button that makes a request through an `OkHttpClient` with `AppSettings.httpInterceptor(context) { ... }`. Verify that `./gradlew :app:assembleDebug :app:assembleQa :app:assembleRelease` succeeds
+- [x] 8.2 Document the feature in `sdk/README.md`: variant wiring with `:sdk-no-op`, the DSL options and defaults, redaction, retention and limits, closing response bodies, and the on-device data caveat. Verify that the README snippet matches the sample app's code
 
 ## 9. Integration checks
 

@@ -28,6 +28,15 @@ android {
                 enable = false
             }
         }
+        // QA builds for testers (for example Firebase App Distribution): minified with R8, with the SDK.
+        create("qa") {
+            isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            optimization {
+                enable = true
+            }
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -46,15 +55,19 @@ detekt {
 }
 
 dependencies {
-    implementation(project(":sdk"))
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.okhttp)
 
+    // The SDK in debug and QA builds; the no-op, with the same API, in production.
+    debugImplementation(project(":sdk"))
     debugImplementation(libs.androidx.compose.ui.tooling)
+    "qaImplementation"(project(":sdk"))
+    releaseImplementation(project(":sdk-no-op"))
 
     testImplementation(libs.junit)
 

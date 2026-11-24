@@ -51,7 +51,7 @@
 ## 9. Integration checks
 
 - [x] 9.1 Install the `qa` build on a device or emulator, make sample requests, and confirm the flow: Settings → Open Logs → list → detail tabs → copy and share. Confirm that the minified build behaves like debug
-- [ ] 9.2 Run `./gradlew assembleDebug test :sdk:koverVerify lint detekt` and the API comparison task, and verify that all pass locally and in the PR's CI ("🏁 Finish")
+- [x] 9.2 Run `./gradlew assembleDebug test :sdk:koverVerify lint detekt` and the API comparison task, and verify that all pass locally and in the PR's CI ("🏁 Finish")
 
 ## Workflow follow-up
 

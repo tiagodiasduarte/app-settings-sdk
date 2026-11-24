@@ -34,8 +34,8 @@
 
 ## 6. Logs list
 
-- [ ] 6.1 Implement `LogsViewModel` (collects the store's `Flow`, maps to items with `HH:mm:ss` times, durations and decimal sizes, clear action) with a factory from `SdkContainer`. Verify with ViewModel tests using a fake store: newest first, success and error items, empty state, clear
-- [ ] 6.2 Implement the stateless `LogsScreen` (top bar with back and clear, list items with method, URL, time, duration, size and status or an error indicator, an empty state message) with `@Preview`s. Verify with Compose UI tests for the success item, error item, empty message, a new log appearing at the top, and selecting an item opening the detail screen
+- [x] 6.1 Implement `LogsViewModel` (collects the store's `Flow`, maps to items with `HH:mm:ss` times, durations and decimal sizes, clear action) with a factory from `SdkContainer`. Verify with ViewModel tests using a fake store: newest first, success and error items, empty state, clear
+- [x] 6.2 Implement the stateless `LogsScreen` (top bar with back and clear, list items with method, URL, time, duration, size and status or an error indicator, an empty state message) with `@Preview`s. Verify with Compose UI tests for the success item, error item, empty message, a new log appearing at the top, and selecting an item opening the detail screen
 
 ## 7. Log detail
 

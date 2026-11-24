@@ -41,10 +41,10 @@ class HttpLogsStoreTest {
         now = HOUR
 
         // When
-        store.save(log(requestedAt = now), "request", "response").join()
+        store.save(log(requestedAt = now), "request", "response")
 
         // Then
-        val summaries = store.observeSummaries().first()
+        val summaries = store.observeSummaries().first { it.isNotEmpty() }
         assertEquals(listOf("https://api.example.com/1"), summaries.map { it.url })
         assertEquals("response", store.get(summaries.single().id)?.bodies?.responseBody)
     }
@@ -57,8 +57,8 @@ class HttpLogsStoreTest {
                 store.clear()
                 store.retention = retention
                 now = WEEK * 2
-                store.save(log(requestedAt = now - retention.millis - 1, id = 1), null, null).join()
-                store.save(log(requestedAt = now - retention.millis + 1, id = 2), null, null).join()
+                store.saveAsync(log(requestedAt = now - retention.millis - 1, id = 1), null, null).join()
+                store.saveAsync(log(requestedAt = now - retention.millis + 1, id = 2), null, null).join()
 
                 // When
                 val urls = store.observeSummaries().first().map { it.url }
@@ -75,7 +75,7 @@ class HttpLogsStoreTest {
             // Given
             store.retention = Retention.ONE_HOUR
             now = HOUR
-            store.save(log(requestedAt = now), "old", null).join()
+            store.saveAsync(log(requestedAt = now), "old", null).join()
             now += 2 * HOUR
 
             // When
@@ -91,10 +91,12 @@ class HttpLogsStoreTest {
     fun `given 500 stored logs when one more call is saved then the oldest is dropped`() = testScope.runTest {
         // Given
         now = HOUR
-        (1..HttpLogsStore.MAX_LOGS).map { store.save(log(requestedAt = it.toLong(), id = it), null, null) }.joinAll()
+        (1..HttpLogsStore.MAX_LOGS)
+            .map { store.saveAsync(log(requestedAt = it.toLong(), id = it), null, null) }
+            .joinAll()
 
         // When
-        store.save(log(requestedAt = now, id = HttpLogsStore.MAX_LOGS + 1), null, null).join()
+        store.saveAsync(log(requestedAt = now, id = HttpLogsStore.MAX_LOGS + 1), null, null).join()
 
         // Then
         val urls = store.observeSummaries().first().map { it.url }
@@ -109,7 +111,7 @@ class HttpLogsStoreTest {
         db.close()
 
         // When
-        val write = store.save(log(requestedAt = 1L), "request", "response")
+        val write = store.saveAsync(log(requestedAt = 1L), "request", "response")
         write.join()
 
         // Then

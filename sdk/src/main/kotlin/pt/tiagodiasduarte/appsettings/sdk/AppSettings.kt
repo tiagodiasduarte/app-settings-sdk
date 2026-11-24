@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import okhttp3.Interceptor
+import pt.tiagodiasduarte.appsettings.sdk.data.http.HeaderRules
+import pt.tiagodiasduarte.appsettings.sdk.data.http.HttpLogsInterceptor
+import pt.tiagodiasduarte.appsettings.sdk.data.local.HttpLogsStore
 import pt.tiagodiasduarte.appsettings.sdk.presentation.AppSettingsActivity
 
 /**
@@ -45,9 +48,11 @@ public object AppSettings {
      */
     @JvmStatic
     public fun httpInterceptor(context: Context, configure: HttpLogsConfig.() -> Unit = {}): Interceptor {
-        HttpLogsConfig().apply(configure)
-        // Temporary pass-through until the recording interceptor exists.
-        return Interceptor { chain -> chain.proceed(chain.request()) }.also { context.applicationContext }
+        val config = HttpLogsConfig().apply(configure)
+        val store = HttpLogsStore.get(context)
+        // One database per process: the most recently created interceptor's retention applies.
+        store.retention = config.retention
+        return HttpLogsInterceptor(store, HeaderRules.from(config), config.maxContentLength)
     }
 }
 

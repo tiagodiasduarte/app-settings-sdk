@@ -21,10 +21,10 @@
 
 ## 4. Capture
 
-- [ ] 4.1 Implement header capture: default redaction of `Authorization`, `Proxy-Authorization`, `Cookie` and `Set-Cookie` to `****`, extra redacted and hidden headers, case-insensitive matching, repeated headers kept. Verify with unit tests for every `http-logs` redaction and hiding scenario
-- [ ] 4.2 Implement body capture: text-based content type detection, charset decoding, truncation at `maxContentLength` with the real size and the truncated flag, binary bodies stored as null with their size, and one-shot or duplex request bodies not read. Verify with unit tests for truncation, binary `image/png` and charset cases
-- [ ] 4.3 Implement the interceptor: duration until headers, an error log with the exception rethrown unchanged, a teeing response body that writes the log when fully read or closed, and immediate logs for bodyless responses. Replace the temporary pass-through from 2.1. Verify with `MockWebServer` tests: the success log has method, URL, status, protocol and sizes; the app reads the full body over the limit; the server receives the real `Authorization` value; a timeout is logged with no status and still reaches the caller; a second client without the interceptor logs nothing
-- [ ] 4.4 Add Kover exclusions for Room's generated `*_Impl` classes and consumer keep rules for `:sdk` if Room's own rules are not enough. Verify that `./gradlew :sdk:koverVerify` passes at 90% line and branch coverage
+- [x] 4.1 Implement header capture: default redaction of `Authorization`, `Proxy-Authorization`, `Cookie` and `Set-Cookie` to `****`, extra redacted and hidden headers, case-insensitive matching, repeated headers kept. Verify with unit tests for every `http-logs` redaction and hiding scenario
+- [x] 4.2 Implement body capture: text-based content type detection, charset decoding, truncation at `maxContentLength` with the real size and the truncated flag, binary bodies stored as null with their size, and one-shot or duplex request bodies not read. Verify with unit tests for truncation, binary `image/png` and charset cases
+- [x] 4.3 Implement the interceptor: duration until headers, an error log with the exception rethrown unchanged, a teeing response body that writes the log when fully read or closed, and immediate logs for bodyless responses. Replace the temporary pass-through from 2.1. Verify with `MockWebServer` tests: the success log has method, URL, status, protocol and sizes; the app reads the full body over the limit; the server receives the real `Authorization` value; a timeout is logged with no status and still reaches the caller; a second client without the interceptor logs nothing
+- [x] 4.4 Add Kover exclusions for Room's generated `*_Impl` classes and consumer keep rules for `:sdk` if Room's own rules are not enough. Verify that `./gradlew :sdk:koverVerify` passes at 90% line and branch coverage
 
 ## 5. Settings screen and navigation
 

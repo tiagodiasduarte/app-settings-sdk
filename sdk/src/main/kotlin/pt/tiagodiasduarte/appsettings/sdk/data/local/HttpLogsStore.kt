@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import pt.tiagodiasduarte.appsettings.sdk.Retention
+import pt.tiagodiasduarte.appsettings.sdk.data.http.HttpLogSink
 
 /**
  * Process-wide access to the HTTP logs database. Writes run on one coroutine at a time, so a
@@ -23,7 +24,7 @@ internal class HttpLogsStore(
     private val dao: HttpLogsDao,
     private val writeScope: CoroutineScope,
     private val clock: () -> Long = System::currentTimeMillis,
-) {
+) : HttpLogSink {
 
     /** The retention of the most recently created interceptor. */
     @Volatile
@@ -33,7 +34,12 @@ internal class HttpLogsStore(
      * Saves a finished call in the background, then deletes expired and excess logs. Callers
      * don't wait for it; the returned job lets tests know when the write finished.
      */
-    fun save(log: HttpLogEntity, requestBody: String?, responseBody: String?): Job = writeScope.launch {
+    override fun save(log: HttpLogEntity, requestBody: String?, responseBody: String?) {
+        saveAsync(log, requestBody, responseBody)
+    }
+
+    /** Like [save], returning the write so tests can wait for it. */
+    fun saveAsync(log: HttpLogEntity, requestBody: String?, responseBody: String?): Job = writeScope.launch {
         safely("save an HTTP log") {
             dao.insert(log, requestBody, responseBody)
             prune()

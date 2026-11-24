@@ -18,7 +18,9 @@ import pt.tiagodiasduarte.appsettings.sdk.domain.model.AppInfo
 import pt.tiagodiasduarte.appsettings.sdk.domain.model.DeviceDetails
 import pt.tiagodiasduarte.appsettings.sdk.domain.usecase.GetAppInfoUseCase
 import pt.tiagodiasduarte.appsettings.sdk.domain.usecase.GetDeviceInfoUseCase
+import pt.tiagodiasduarte.appsettings.sdk.presentation.model.AppSettingsRoute
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.InfoRowUi
+import pt.tiagodiasduarte.appsettings.sdk.presentation.model.NavigationRowUi
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.SectionUi
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.SettingsUiState
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.UiText
@@ -35,10 +37,11 @@ internal class SettingsViewModel(
     init {
         viewModelScope.launch {
             val sections = withContext(dispatcher) {
-                // Order is part of the contract: Application first, then Device.
+                // Order is part of the contract: Application, Device, then Logs.
                 listOf(
                     getAppInfo().toSection(),
                     getDeviceInfo().toSection(),
+                    logsSection(),
                 )
             }
             _uiState.value = SettingsUiState(sections = sections)
@@ -70,4 +73,9 @@ private fun DeviceDetails.toSection() = SectionUi(
         InfoRowUi(R.string.appsettings_label_model, UiText.Plain(model)),
         InfoRowUi(R.string.appsettings_label_android_version, UiText.Plain(androidVersion)),
     ),
+)
+
+private fun logsSection() = SectionUi(
+    titleRes = R.string.appsettings_section_logs,
+    rows = listOf(NavigationRowUi(R.string.appsettings_label_open_logs, AppSettingsRoute.Logs)),
 )

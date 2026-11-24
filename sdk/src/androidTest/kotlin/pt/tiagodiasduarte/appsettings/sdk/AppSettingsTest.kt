@@ -4,6 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
@@ -53,6 +54,24 @@ class AppSettingsTest {
         // Then
         waitForSettingsScreen()
         Espresso.pressBackUnconditionally()
+    }
+
+    @Test
+    fun givenTheLogsScreenOpenedFromSettings_whenBackIsPressed_thenTheSettingsScreenIsShownAgain() {
+        // Given
+        ActivityScenario.launch(HostActivity::class.java).use { scenario ->
+            scenario.onActivity { AppSettings.open(it) }
+            waitForSettingsScreen()
+            composeRule.onNodeWithText("Open Logs").performClick()
+            composeRule.onNodeWithText("HTTP logs").assertIsDisplayed()
+
+            // When
+            Espresso.pressBack()
+
+            // Then
+            composeRule.onNodeWithText("Open Logs").assertIsDisplayed()
+            Espresso.pressBack()
+        }
     }
 
     private companion object {

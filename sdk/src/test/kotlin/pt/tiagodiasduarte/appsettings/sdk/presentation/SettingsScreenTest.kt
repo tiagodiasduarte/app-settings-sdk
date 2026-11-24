@@ -1,19 +1,24 @@
 package pt.tiagodiasduarte.appsettings.sdk.presentation
 
+import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import pt.tiagodiasduarte.appsettings.sdk.R
+import pt.tiagodiasduarte.appsettings.sdk.presentation.model.AppSettingsRoute
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.InfoRowUi
+import pt.tiagodiasduarte.appsettings.sdk.presentation.model.NavigationRowUi
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.SectionUi
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.SettingsUiState
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.UiText
@@ -47,11 +52,18 @@ class SettingsScreenTest {
                     InfoRowUi(R.string.appsettings_label_android_version, UiText.Plain("15 (API 35)")),
                 ),
             ),
+            SectionUi(
+                R.string.appsettings_section_logs,
+                listOf(NavigationRowUi(R.string.appsettings_label_open_logs, AppSettingsRoute.Logs)),
+            ),
         ),
     )
 
-    private fun setContent(uiState: SettingsUiState) =
-        composeRule.setContent { AppSettingsTheme(dynamicColor = false) { SettingsScreen(uiState) } }
+    private val navigations = mutableListOf<AppSettingsRoute>()
+
+    private fun setContent(uiState: SettingsUiState) = composeRule.setContent {
+        AppSettingsTheme(dynamicColor = false) { SettingsScreen(uiState, onNavigate = { navigations += it }) }
+    }
 
     @Test
     fun `given application and device sections when the screen is shown then Application is above Device`() {
@@ -98,5 +110,32 @@ class SettingsScreenTest {
 
         // Then
         composeRule.onNodeWithText("value 39").assertIsDisplayed()
+    }
+
+    @Test
+    fun `given the three sections when the screen is shown then Logs is below Device with an Open Logs row`() {
+        // Given
+        val uiState = state
+
+        // When
+        setContent(uiState)
+
+        // Then
+        val deviceTop = composeRule.onNodeWithText("Device").fetchSemanticsNode().boundsInRoot.top
+        val logsTop = composeRule.onNodeWithText("Logs").assertIsDisplayed().fetchSemanticsNode().boundsInRoot.top
+        assertTrue("Logs must be below Device", deviceTop < logsTop)
+        composeRule.onNodeWithText("Open Logs").assertIsDisplayed().assertHasClickAction()
+    }
+
+    @Test
+    fun `given the Open Logs row when it is selected then the logs screen is requested`() {
+        // Given
+        setContent(state)
+
+        // When
+        composeRule.onNodeWithText("Open Logs").performClick()
+
+        // Then
+        assertEquals(listOf<AppSettingsRoute>(AppSettingsRoute.Logs), navigations)
     }
 }

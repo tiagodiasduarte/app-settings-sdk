@@ -1,9 +1,10 @@
 # App Settings SDK
 
-An in-app tools screen for my own apps. It currently shows:
+An in-app tools screen for my own apps. It shows these sections, in this order:
 
 - **Application**: version name, version code and app id of the host app
 - **Device**: manufacturer and model, plus Android version and API level
+- **Logs**: an **Open Logs** row that opens the HTTP logs recorded by the SDK interceptor
 
 ## Integration
 
@@ -36,7 +37,7 @@ needs no theme, DI framework or manifest entries from the host app.
 ## Architecture
 
 ```
-presentation  AppSettingsActivity, SettingsScreen (Compose), SettingsViewModel
+presentation  AppSettingsActivity (Navigation 3 host), SettingsScreen (Compose), SettingsViewModel
      |
      v
 domain        AppInfo, DeviceInfo, use cases, repository interfaces (pure Kotlin)

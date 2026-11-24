@@ -28,9 +28,9 @@
 
 ## 5. Settings screen and navigation
 
-- [ ] 5.1 Turn rows into a sealed `RowUi` (`Info`, `Navigation`), render navigation rows as tappable rows with a chevron, and add the Logs section with an "Open Logs" row after Device, with `appsettings_` strings. Verify with an updated `SettingsViewModelTest` (sections Application, Device, Logs) and a `SettingsScreenTest` that the Logs section and "Open Logs" row render third
-- [ ] 5.2 Host the Settings, Logs and LogDetail destinations in `AppSettingsActivity` with Navigation 3. Verify with a Compose UI test that selecting "Open Logs" shows the logs screen and back returns to settings, and update the instrumented `AppSettingsTest` for back from the logs screen
-- [ ] 5.3 Update the `settings-screen` related docs in `sdk/README.md` (screen contents) and verify that the README lists the Logs section
+- [x] 5.1 Turn rows into a sealed `RowUi` (`Info`, `Navigation`), render navigation rows as tappable rows with a chevron, and add the Logs section with an "Open Logs" row after Device, with `appsettings_` strings. Verify with an updated `SettingsViewModelTest` (sections Application, Device, Logs) and a `SettingsScreenTest` that the Logs section and "Open Logs" row render third
+- [x] 5.2 Host the Settings, Logs and LogDetail destinations in `AppSettingsActivity` with Navigation 3. Verify with a Compose UI test that selecting "Open Logs" shows the logs screen and back returns to settings, and update the instrumented `AppSettingsTest` for back from the logs screen
+- [x] 5.3 Update the `settings-screen` related docs in `sdk/README.md` (screen contents) and verify that the README lists the Logs section
 
 ## 6. Logs list
 

@@ -10,5 +10,9 @@
     <string name="appsettings_label_model">Model</string>
     <string name="appsettings_label_android_version">Android version</string>
 
+    <string name="appsettings_section_logs">Logs</string>
+    <string name="appsettings_label_open_logs">Open Logs</string>
+    <string name="appsettings_logs_title">HTTP logs</string>
+
     <string name="appsettings_value_unknown">Unknown</string>
 </resources>

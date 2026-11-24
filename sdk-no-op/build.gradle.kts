@@ -22,6 +22,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    testOptions {
+        // The no-op only needs a Context instance, never its behavior.
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 kotlin {

@@ -9,9 +9,9 @@
 
 ## 2. Public API and no-op
 
-- [ ] 2.1 Add the public `Retention` enum, the `@HttpLogsDsl` marker, `HttpLogsConfig` (retention, `maxContentLength` with a positive check, `redactDefaultHeaders`, `redactHeaders`, `hideHeaders`) and `AppSettings.httpInterceptor(context, configure)` to `:sdk`, with KDoc, returning a temporary pass-through interceptor. Verify with unit tests that the defaults are 1 day, 250,000 bytes and default redaction on, that the DSL collects header names, and that a non-positive `maxContentLength` throws `IllegalArgumentException`
-- [ ] 2.2 Mirror the same public declarations in `:sdk-no-op`: `open` does nothing, and `httpInterceptor` evaluates the block and returns a pass-through interceptor. Verify with a `MockWebServer` test that calls pass through unchanged, and that the API comparison task from 1.4 passes
-- [ ] 2.3 Wire the API comparison task into CI (the `android-test` or `static-analysis` job) and verify that the workflow file runs it
+- [x] 2.1 Add the public `Retention` enum, the `@HttpLogsDsl` marker, `HttpLogsConfig` (retention, `maxContentLength` with a positive check, `redactDefaultHeaders`, `redactHeaders`, `hideHeaders`) and `AppSettings.httpInterceptor(context, configure)` to `:sdk`, with KDoc, returning a temporary pass-through interceptor. Verify with unit tests that the defaults are 1 day, 250,000 bytes and default redaction on, that the DSL collects header names, and that a non-positive `maxContentLength` throws `IllegalArgumentException`
+- [x] 2.2 Mirror the same public declarations in `:sdk-no-op`: `open` does nothing, and `httpInterceptor` evaluates the block and returns a pass-through interceptor. Verify with a `MockWebServer` test that calls pass through unchanged, and that the API comparison task from 1.4 passes
+- [x] 2.3 Wire the API comparison task into CI (the `android-test` or `static-analysis` job) and verify that the workflow file runs it
 
 ## 3. Storage
 

@@ -82,7 +82,10 @@ private suspend fun sampleRequest(client: OkHttpClient): String = withContext(Di
         .header("X-Internal-Trace", "sample-trace")
         .build()
     try {
-        client.newCall(request).execute().use { "HTTP ${it.code}" }
+        // Read the body, as Retrofit does: a call is logged once its body is read or closed.
+        client.newCall(request).execute().use { response ->
+            "HTTP ${response.code}, ${response.body?.string().orEmpty().length} characters"
+        }
     } catch (e: IOException) {
         "Request failed: ${e.message}"
     }

@@ -29,7 +29,8 @@ internal object LogShareText {
 
     fun build(log: HttpLogDetail, format: LogFormat, maxBodyChars: Int = MAX_BODY_CHARS): String = buildString {
         appendLine("${log.method} ${log.url}")
-        appendLine("Status: ${listOfNotNull(log.statusCode, log.statusMessage).joinToString(" ").ifEmpty { "-" }}")
+        val message = log.statusMessage?.takeIf { it.isNotBlank() }
+        appendLine("Status: ${listOfNotNull(log.statusCode, message).joinToString(" ").ifEmpty { "-" }}")
         appendLine("Started: ${format.timeWithMillis(log.startedAt)}")
         appendLine("Duration: ${format.duration(log.durationMs)}")
         log.error?.let { appendLine("Error: $it") }

@@ -26,7 +26,8 @@ internal sealed interface BodyUi {
     /** [text] is pretty-printed when it is valid JSON. */
     data class Text(val text: String, val truncated: Boolean) : BodyUi
     data class Binary(val size: String) : BodyUi
-    data class NotCaptured(val size: String) : BodyUi
+    /** [size] is null when the app closed the body before reading it and its length was unknown. */
+    data class NotCaptured(val size: String?) : BodyUi
     data object Empty : BodyUi
 }
 
@@ -82,7 +83,8 @@ internal class LogDetailViewModel(
     )
 
     private fun HttpLogDetail.status(): String =
-        listOfNotNull(statusCode, statusMessage).joinToString(" ").ifEmpty { NONE }
+        // HTTP/2 responses have no reason phrase, so the message is often blank.
+        listOfNotNull(statusCode, statusMessage?.takeIf { it.isNotBlank() }).joinToString(" ").ifEmpty { NONE }
 
     private fun HttpMessage.toUi() = MessageUi(headers = headers, body = bodyUi())
 
@@ -93,6 +95,7 @@ internal class LogDetailViewModel(
                 text = if (ContentTypes.isJson(contentType)) JsonPrettyPrinter.format(body) else body,
                 truncated = bodyTruncated,
             )
+            bodySize == null && contentType != null -> BodyUi.NotCaptured(size = null)
             size == null -> BodyUi.Empty
             ContentTypes.isText(contentType) -> BodyUi.NotCaptured(format.size(size))
             else -> BodyUi.Binary(format.size(size))

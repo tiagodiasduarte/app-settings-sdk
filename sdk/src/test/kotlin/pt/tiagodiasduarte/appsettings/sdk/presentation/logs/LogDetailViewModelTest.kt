@@ -60,6 +60,18 @@ class LogDetailViewModelTest {
     }
 
     @Test
+    fun `given an HTTP 2 response without reason phrase when the detail loads then the status is just the code`() {
+        // Given
+        val log = detail().copy(statusMessage = "")
+
+        // When
+        val overview = detailOf(log)?.overview.orEmpty()
+
+        // Then
+        assertTrue(OverviewRowUi(R.string.appsettings_detail_status, "200") in overview)
+    }
+
+    @Test
     fun `given a failed call when the detail loads then the overview shows the error and no status`() {
         // Given
         val log = detail()
@@ -132,6 +144,18 @@ class LogDetailViewModelTest {
 
         // Then
         assertEquals(BodyUi.NotCaptured("5 B"), body)
+    }
+
+    @Test
+    fun `given a response closed unread with unknown size when the detail loads then it was not captured`() {
+        // Given
+        val log = detail(response = message(body = null, contentType = "application/json", size = null))
+
+        // When
+        val body = detailOf(log)?.response?.body
+
+        // Then
+        assertEquals(BodyUi.NotCaptured(size = null), body)
     }
 
     @Test

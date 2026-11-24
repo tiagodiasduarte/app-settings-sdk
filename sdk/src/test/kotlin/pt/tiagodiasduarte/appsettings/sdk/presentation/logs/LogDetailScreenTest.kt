@@ -109,6 +109,19 @@ class LogDetailScreenTest {
     }
 
     @Test
+    fun `given a response closed unread when the Response tab is selected then it says it was not read`() {
+        // Given
+        val response = MessageUi(emptyList(), BodyUi.NotCaptured(size = null))
+        setContent(LogDetailUiState(loaded = true, detail = detail(response = response)))
+
+        // When
+        composeRule.onNodeWithText("Response").performClick()
+
+        // Then
+        composeRule.onNodeWithText("Body was not captured: the app closed it before reading it").assertIsDisplayed()
+    }
+
+    @Test
     fun `given a log that no longer exists when the detail opens then it says it is not available`() {
         // Given
         val state = LogDetailUiState(loaded = true, detail = null)

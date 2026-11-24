@@ -86,6 +86,18 @@ class LogSharingTest {
     }
 
     @Test
+    fun `given an HTTP 2 response without reason phrase when the share text is built then the status is the code`() {
+        // Given
+        val log = log().copy(statusMessage = "")
+
+        // When
+        val text = LogShareText.build(log, format)
+
+        // Then
+        assertTrue("Status: 200\n" in text)
+    }
+
+    @Test
     fun `given a body longer than the share limit when the share text is built then the body is cut and marked`() {
         // Given
         val log = log(response = HttpMessage(emptyList(), "text/plain", "x".repeat(150), 150L, false))

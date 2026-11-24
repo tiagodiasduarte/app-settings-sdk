@@ -50,5 +50,15 @@ internal object BodyCapture {
         return CapturedBody(text = text, size = totalSize, truncated = truncated)
     }
 
+    /**
+     * A response body the app closed before reading it to the end: the size is only known from
+     * Content-Length, and whatever was read is kept, marked as truncated.
+     */
+    fun partial(kept: Buffer, knownSize: Long?, contentType: MediaType?, maxContentLength: Long): CapturedBody {
+        if (kept.size == 0L) return CapturedBody(text = null, size = knownSize, truncated = false)
+        val read = fromBuffer(kept, totalSize = knownSize ?: kept.size, contentType, maxContentLength)
+        return read.copy(size = knownSize, truncated = read.text != null)
+    }
+
     private fun MediaType?.charsetOrUtf8(): Charset = this?.charset() ?: Charsets.UTF_8
 }

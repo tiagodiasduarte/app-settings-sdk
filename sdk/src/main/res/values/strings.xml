@@ -37,6 +37,7 @@
     <string name="appsettings_detail_body_truncated">Body truncated: only the first part was stored.</string>
     <string name="appsettings_detail_body_binary">Binary body (%1$s) not shown</string>
     <string name="appsettings_detail_body_not_captured">Body (%1$s) was not captured</string>
+    <string name="appsettings_detail_body_not_read">Body was not captured: the app closed it before reading it</string>
     <string name="appsettings_detail_copy_body">Copy body</string>
     <string name="appsettings_detail_share">Share log</string>
     <string name="appsettings_detail_not_found">This log is no longer available.</string>

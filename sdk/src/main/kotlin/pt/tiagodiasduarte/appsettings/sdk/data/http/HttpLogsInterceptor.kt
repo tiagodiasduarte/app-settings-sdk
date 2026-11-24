@@ -40,9 +40,13 @@ internal class HttpLogsInterceptor(
             return response
         }
         val contentType = body.contentType()
-        val tee = TeeSource(body.source(), maxContentLength) { kept, bytesRead ->
-            val totalSize = body.contentLength().takeIf { it >= 0 } ?: bytesRead
-            val responseBody = BodyCapture.fromBuffer(kept, totalSize, contentType, maxContentLength)
+        val knownSize = body.contentLength().takeIf { it >= 0 }
+        val tee = TeeSource(body.source(), maxContentLength) { kept, bytesRead, complete ->
+            val responseBody = if (complete) {
+                BodyCapture.fromBuffer(kept, totalSize = bytesRead, contentType, maxContentLength)
+            } else {
+                BodyCapture.partial(kept, knownSize, contentType, maxContentLength)
+            }
             sink.save(
                 log(request, response, startedAt, durationMs, requestBody, responseBody),
                 requestBody.text,

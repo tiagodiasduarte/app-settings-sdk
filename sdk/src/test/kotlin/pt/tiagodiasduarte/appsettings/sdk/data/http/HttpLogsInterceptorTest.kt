@@ -117,7 +117,37 @@ class HttpLogsInterceptorTest {
 
         // Then
         assertEquals(6L, saved.single().log.responseBodySize)
-        assertEquals("", saved.single().responseBody)
+        assertNull(saved.single().responseBody)
+    }
+
+    @Test
+    fun `given a body of unknown length closed without reading when the call ends then its size is unknown`() {
+        // Given
+        server.enqueue(MockResponse().setHeader("Content-Type", "application/json").setChunkedBody("{\"id\":1}", 4))
+        val client = client()
+
+        // When
+        client.newCall(get("/unread")).execute().close()
+
+        // Then
+        assertNull(saved.single().log.responseBodySize)
+        assertNull(saved.single().responseBody)
+        assertEquals(false, saved.single().log.responseBodyTruncated)
+    }
+
+    @Test
+    fun `given the app reads part of a body then closes it when the call ends then the read part is kept truncated`() {
+        // Given
+        server.enqueue(MockResponse().setHeader("Content-Type", "text/plain").setBody("abcdefghij"))
+        val client = client()
+
+        // When
+        client.newCall(get("/partial")).execute().use { it.body?.source()?.readUtf8(4) }
+
+        // Then
+        assertEquals(10L, saved.single().log.responseBodySize)
+        assertTrue(saved.single().responseBody.orEmpty().startsWith("abcd"))
+        assertTrue(saved.single().log.responseBodyTruncated)
     }
 
     @Test

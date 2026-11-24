@@ -147,7 +147,10 @@ private fun LazyListScope.message(message: MessageUi) {
             Note(stringResource(R.string.appsettings_detail_body_binary, body.size))
         }
         is BodyUi.NotCaptured -> item(key = "not_captured") {
-            Note(stringResource(R.string.appsettings_detail_body_not_captured, body.size))
+            Note(
+                body.size?.let { stringResource(R.string.appsettings_detail_body_not_captured, it) }
+                    ?: stringResource(R.string.appsettings_detail_body_not_read),
+            )
         }
         BodyUi.Empty -> item(key = "empty") { Note(stringResource(R.string.appsettings_detail_body_empty)) }
     }

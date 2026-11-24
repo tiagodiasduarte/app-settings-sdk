@@ -39,9 +39,9 @@
 
 ## 7. Log detail
 
-- [ ] 7.1 Implement `LogDetailViewModel(id)` and the JSON pretty-printer (`org.json`, `\/` restored, invalid or truncated JSON shown as stored). Verify with unit tests for valid JSON, invalid JSON, a truncated marker, a binary body message and a missing body
-- [ ] 7.2 Implement `LogDetailScreen` with Overview, Request and Response tabs (`PrimaryTabRow`). Overview shows URL, method, status and message, start time, duration, protocol, sizes and error; Request and Response show headers and body. Verify with Compose UI tests for each tab's content and the truncated marker
-- [ ] 7.3 Add the copy body action (clipboard) and the share log action (`ACTION_SEND` text with redacted values, no hidden headers, bodies cut at 100,000 characters). Verify with Robolectric tests that the clipboard holds the body and that the share intent text contains `Authorization: ****` and no hidden header
+- [x] 7.1 Implement `LogDetailViewModel(id)` and the JSON pretty-printer (`org.json`, `\/` restored, invalid or truncated JSON shown as stored). Verify with unit tests for valid JSON, invalid JSON, a truncated marker, a binary body message and a missing body
+- [x] 7.2 Implement `LogDetailScreen` with Overview, Request and Response tabs (`PrimaryTabRow`). Overview shows URL, method, status and message, start time, duration, protocol, sizes and error; Request and Response show headers and body. Verify with Compose UI tests for each tab's content and the truncated marker
+- [x] 7.3 Add the copy body action (clipboard) and the share log action (`ACTION_SEND` text with redacted values, no hidden headers, bodies cut at 100,000 characters). Verify with Robolectric tests that the clipboard holds the body and that the share intent text contains `Authorization: ****` and no hidden header
 
 ## 8. Sample app and docs
 

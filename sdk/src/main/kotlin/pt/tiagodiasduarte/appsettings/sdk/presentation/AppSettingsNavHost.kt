@@ -1,18 +1,12 @@
 package pt.tiagodiasduarte.appsettings.sdk.presentation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -22,8 +16,12 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import pt.tiagodiasduarte.appsettings.sdk.R
 import pt.tiagodiasduarte.appsettings.sdk.di.SdkContainer
+import pt.tiagodiasduarte.appsettings.sdk.presentation.logs.LogDetailScreen
+import pt.tiagodiasduarte.appsettings.sdk.presentation.logs.LogDetailViewModel
 import pt.tiagodiasduarte.appsettings.sdk.presentation.logs.LogsScreen
 import pt.tiagodiasduarte.appsettings.sdk.presentation.logs.LogsViewModel
+import pt.tiagodiasduarte.appsettings.sdk.presentation.logs.copyToClipboard
+import pt.tiagodiasduarte.appsettings.sdk.presentation.logs.shareText
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.AppSettingsRoute
 
 /**
@@ -58,18 +56,20 @@ internal fun AppSettingsNavHost(container: SdkContainer) {
                     onOpen = { id -> backStack.add(AppSettingsRoute.LogDetail(id)) },
                 )
             }
-            entry<AppSettingsRoute.LogDetail> {
-                PendingScreen(stringResource(R.string.appsettings_logs_title))
+            entry<AppSettingsRoute.LogDetail> { route ->
+                val viewModel: LogDetailViewModel = viewModel(factory = LogDetailViewModel.factory(route.id, container))
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                val context = LocalContext.current
+                val copyLabel = stringResource(R.string.appsettings_detail_body)
+                LogDetailScreen(
+                    uiState = uiState,
+                    onBack = { backStack.removeAt(backStack.lastIndex) },
+                    onCopy = { body -> context.copyToClipboard(copyLabel, body) },
+                    onShare = context::shareText,
+                )
             }
         },
     )
-}
-
-/** Stand-in until the logs list and detail screens exist. */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun PendingScreen(title: String) {
-    Scaffold(topBar = { TopAppBar(title = { Text(title) }) }) { padding -> Box(Modifier.padding(padding)) }
 }
 
 private val backStackSaver: Saver<SnapshotStateList<AppSettingsRoute>, ArrayList<String>> = Saver(

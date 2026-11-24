@@ -3,6 +3,7 @@ package pt.tiagodiasduarte.appsettings.sdk.data.http
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import okio.Buffer
+import pt.tiagodiasduarte.appsettings.sdk.domain.model.ContentTypes
 import java.nio.charset.Charset
 
 /**
@@ -21,17 +22,8 @@ internal data class CapturedBody(
 
 internal object BodyCapture {
 
-    private val TEXT_SUBTYPES = setOf("json", "xml", "x-www-form-urlencoded", "javascript", "graphql")
-
     /** Text bodies are stored as text; anything else (images, protobuf...) only by size. */
-    fun isText(contentType: MediaType?): Boolean {
-        if (contentType == null) return true
-        val subtype = contentType.subtype.lowercase()
-        return contentType.type.lowercase() == "text" ||
-            subtype in TEXT_SUBTYPES ||
-            subtype.endsWith("+json") ||
-            subtype.endsWith("+xml")
-    }
+    fun isText(contentType: MediaType?): Boolean = ContentTypes.isText(contentType?.toString())
 
     /** Copies up to [maxContentLength] bytes of a request body. One-shot and duplex bodies are never read. */
     fun request(body: RequestBody?, maxContentLength: Long): CapturedBody = when {

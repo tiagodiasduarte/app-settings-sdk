@@ -1,15 +1,27 @@
 package pt.tiagodiasduarte.appsettings.sdk.data.local
 
+import android.content.Context
 import androidx.room.Database
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
-/** Placeholder entity so Room can generate the database; replaced by the real schema. */
-@Entity(tableName = "http_logs")
-internal data class HttpLogEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-)
+/**
+ * The SDK's HTTP logs database. Logs expire within a week at most, so schema changes drop the
+ * tables instead of migrating them.
+ */
+@Database(entities = [HttpLogEntity::class, HttpLogBodiesEntity::class], version = 1, exportSchema = true)
+@TypeConverters(HeadersConverter::class)
+internal abstract class HttpLogsDatabase : RoomDatabase() {
 
-@Database(entities = [HttpLogEntity::class], version = 1, exportSchema = true)
-internal abstract class HttpLogsDatabase : RoomDatabase()
+    abstract fun httpLogsDao(): HttpLogsDao
+
+    companion object {
+        const val NAME = "appsettings_http_logs.db"
+
+        fun create(context: Context): HttpLogsDatabase =
+            Room.databaseBuilder(context.applicationContext, HttpLogsDatabase::class.java, NAME)
+                .fallbackToDestructiveMigration(dropAllTables = true)
+                .build()
+    }
+}

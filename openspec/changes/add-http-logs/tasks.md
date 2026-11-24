@@ -15,9 +15,9 @@
 
 ## 3. Storage
 
-- [ ] 3.1 Replace the placeholder with the `http_logs` and `http_log_bodies` entities from design.md (index on `requestedAt`, cascade delete), the header list JSON converter, and `appsettings_http_logs.db` version 1 with destructive migration. Verify that `./gradlew :sdk:assembleDebug` exports `sdk/schemas/.../1.json` with both tables
-- [ ] 3.2 Implement the DAO: insert a log with its bodies in one transaction, a `Flow` of list items newer than a cutoff, newest first, without bodies, load one log with its bodies, clear all, prune by age, and keep the newest 500. Verify with Robolectric in-memory Room tests for each query, including that cascade delete removes bodies
-- [ ] 3.3 Implement `HttpLogsStore` (process-wide, application context, single-writer scope, injected clock, errors caught and logged): save then prune, prune when the list opens, apply the latest configuration. Verify with tests using a fake clock: logs past 1 hour, 1 day and 1 week are deleted and hidden, the 501st log drops the oldest, and a database error does not throw to the caller
+- [x] 3.1 Replace the placeholder with the `http_logs` and `http_log_bodies` entities from design.md (index on `requestedAt`, cascade delete), the header list JSON converter, and `appsettings_http_logs.db` version 1 with destructive migration. Verify that `./gradlew :sdk:assembleDebug` exports `sdk/schemas/.../1.json` with both tables
+- [x] 3.2 Implement the DAO: insert a log with its bodies in one transaction, a `Flow` of list items newer than a cutoff, newest first, without bodies, load one log with its bodies, clear all, prune by age, and keep the newest 500. Verify with Robolectric in-memory Room tests for each query, including that cascade delete removes bodies
+- [x] 3.3 Implement `HttpLogsStore` (process-wide, application context, single-writer scope, injected clock, errors caught and logged): save then prune, prune when the list opens, apply the latest configuration. Verify with tests using a fake clock: logs past 1 hour, 1 day and 1 week are deleted and hidden, the 501st log drops the oldest, and a database error does not throw to the caller
 
 ## 4. Capture
 

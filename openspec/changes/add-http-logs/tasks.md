@@ -2,10 +2,10 @@
 
 ## 1. Build setup
 
-- [ ] 1.1 Add OkHttp 4.12 (`okhttp`, `mockwebserver`), Room 2.8.x (`room-runtime`, `room-ktx`, `room-compiler`, `room-testing`), Navigation 3 and the KSP plugin to `gradle/libs.versions.toml`, sorted per the Gradle conventions, with a KSP version that works with AGP 9's built-in Kotlin 2.2.10. Verify with `./gradlew help --configuration-cache`, which should succeed
-- [ ] 1.2 Apply KSP and Room to `:sdk` (`compileOnly` OkHttp, Room runtime/KTX, `ksp(room-compiler)`, schema export to `sdk/schemas/`) and add an empty `@Database` with one placeholder entity. Verify that `./gradlew :sdk:assembleDebug` succeeds and generates the Room `_Impl` class
-- [ ] 1.3 Create the `:sdk-no-op` module (`com.android.library`, namespace `pt.tiagodiasduarte.appsettings.sdk.noop`, same SDK levels, `explicitApi()`, `compileOnly` OkHttp, detekt) and include it in `settings.gradle.kts`. Verify that `./gradlew :sdk-no-op:assembleDebug` succeeds
-- [ ] 1.4 Add the binary-compatibility-validator to `:sdk` and `:sdk-no-op` (or the fallback from design.md if it does not support AGP 9 built-in Kotlin), plus a configuration-cache compatible task that fails when the two `.api` dumps differ. Verify that the task passes on matching dumps and fails after a temporary extra public function in one module
+- [x] 1.1 Add OkHttp 4.12 (`okhttp`, `mockwebserver`), Room 2.8.x (`room-runtime`, `room-ktx`, `room-compiler`, `room-testing`), Navigation 3 and the KSP plugin to `gradle/libs.versions.toml`, sorted per the Gradle conventions, with a KSP version that works with AGP 9's built-in Kotlin 2.2.10. Verify with `./gradlew help --configuration-cache`, which should succeed
+- [x] 1.2 Apply KSP and Room to `:sdk` (`compileOnly` OkHttp, Room runtime/KTX, `ksp(room-compiler)`, schema export to `sdk/schemas/`) and add an empty `@Database` with one placeholder entity. Verify that `./gradlew :sdk:assembleDebug` succeeds and generates the Room `_Impl` class
+- [x] 1.3 Create the `:sdk-no-op` module (`com.android.library`, namespace `pt.tiagodiasduarte.appsettings.sdk.noop`, same SDK levels, `explicitApi()`, `compileOnly` OkHttp, detekt) and include it in `settings.gradle.kts`. Verify that `./gradlew :sdk-no-op:assembleDebug` succeeds
+- [x] 1.4 Add the binary-compatibility-validator to `:sdk` and `:sdk-no-op` (or the fallback from design.md if it does not support AGP 9 built-in Kotlin), plus a configuration-cache compatible task that fails when the two `.api` dumps differ. Verify that the task passes on matching dumps and fails after a temporary extra public function in one module
 
 ## 2. Public API and no-op
 

@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "App Settings Sdk"
 include(":app")
 include(":sdk")
+include(":sdk-no-op")

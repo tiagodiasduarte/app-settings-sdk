@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.Flow
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpLogDetail
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpLogItem
 
-internal interface HttpLogsRepository {
+public interface HttpLogsRepository {
     /** Logs within the retention period, newest first, updated as calls finish. */
-    fun observeLogs(): Flow<List<HttpLogItem>>
+    public fun observeLogs(): Flow<List<HttpLogItem>>
 
-    suspend fun getLog(id: Long): HttpLogDetail?
+    public suspend fun getLog(id: Long): HttpLogDetail?
 
-    suspend fun clearLogs()
+    public suspend fun clearLogs()
 }

@@ -7,7 +7,7 @@
 
 ## 2. Domain
 
-- [ ] 2.1 Move `domain/*` (models, `ContentTypes`, repository interfaces, use cases) with its tests to `:cabitools-sdk-domain`, making them `public`. Verify that `:cabitools-sdk-domain:test` passes and the module has no Android dependency
+- [x] 2.1 Move `domain/*` (models, `ContentTypes`, repository interfaces, use cases) with its tests to `:cabitools-sdk-domain`, making them `public`. Verify that `:cabitools-sdk-domain:test` passes and the module has no Android dependency
 
 ## 3. Infrastructure
 

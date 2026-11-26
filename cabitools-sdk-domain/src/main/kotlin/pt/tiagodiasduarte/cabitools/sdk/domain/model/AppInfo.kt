@@ -5,7 +5,7 @@ package pt.tiagodiasduarte.cabitools.sdk.domain.model
  *
  * @property versionName `null` when the host app was built without a version name.
  */
-internal data class AppInfo(
+public data class AppInfo(
     val applicationId: String,
     val versionName: String?,
     val versionCode: Long,

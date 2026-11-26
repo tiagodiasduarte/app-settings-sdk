@@ -89,6 +89,8 @@ internal class LogDetailViewModel(
     private fun HttpMessage.toUi() = MessageUi(headers = headers, body = bodyUi())
 
     private fun HttpMessage.bodyUi(): BodyUi {
+        // Local copies: HttpMessage comes from the domain module, so its properties can't be smart-cast.
+        val body = body
         val size = bodySize?.takeIf { it > 0 }
         return when {
             body != null -> BodyUi.Text(

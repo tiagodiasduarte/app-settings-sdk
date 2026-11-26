@@ -44,9 +44,10 @@ internal object LogShareText {
         message.headers.forEach { appendLine("${it.name}: ${it.value}") }
         appendLine()
         val body = message.body
+        val bodySize = message.bodySize
         when {
-            body == null && message.bodySize != null && message.bodySize > 0 ->
-                appendLine("(body of ${format.size(message.bodySize)} not shown)")
+            body == null && bodySize != null && bodySize > 0 ->
+                appendLine("(body of ${format.size(bodySize)} not shown)")
             body.isNullOrEmpty() -> appendLine("(no body)")
             body.length > maxBodyChars -> appendLine(body.take(maxBodyChars)).appendLine("[body truncated]")
             else -> {

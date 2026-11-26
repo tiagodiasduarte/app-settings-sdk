@@ -1,7 +1,7 @@
 package pt.tiagodiasduarte.cabitools.sdk.domain.model
 
 /** One recorded call as the logs list shows it. [statusCode] is null when the call failed; see [error]. */
-internal data class HttpLogItem(
+public data class HttpLogItem(
     val id: Long,
     val method: String,
     val url: String,
@@ -15,7 +15,7 @@ internal data class HttpLogItem(
 )
 
 /** One recorded call with everything the detail screen shows. */
-internal data class HttpLogDetail(
+public data class HttpLogDetail(
     val id: Long,
     val method: String,
     val url: String,
@@ -30,7 +30,7 @@ internal data class HttpLogDetail(
 )
 
 /** The headers and body of a request or response, as stored (redacted, truncated). */
-internal data class HttpMessage(
+public data class HttpMessage(
     val headers: List<HttpHeader>,
     val contentType: String?,
     /** Null for binary, uncaptured or absent bodies. */

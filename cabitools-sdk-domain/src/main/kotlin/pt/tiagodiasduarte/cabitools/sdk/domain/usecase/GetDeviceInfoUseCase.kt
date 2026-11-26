@@ -5,10 +5,10 @@ import pt.tiagodiasduarte.cabitools.sdk.domain.model.DeviceDetails
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.DeviceInfo
 import pt.tiagodiasduarte.cabitools.sdk.domain.repository.DeviceInfoRepository
 
-internal class GetDeviceInfoUseCase(
+public class GetDeviceInfoUseCase(
     private val repository: DeviceInfoRepository,
 ) {
-    operator fun invoke(): DeviceDetails = repository.getDeviceInfo().toDetails()
+    public operator fun invoke(): DeviceDetails = repository.getDeviceInfo().toDetails()
 }
 
 internal fun DeviceInfo.toDetails(): DeviceDetails = DeviceDetails(

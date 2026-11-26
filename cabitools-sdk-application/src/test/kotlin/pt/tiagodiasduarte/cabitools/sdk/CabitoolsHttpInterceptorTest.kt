@@ -3,40 +3,48 @@ package pt.tiagodiasduarte.cabitools.sdk
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runTest
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
-import pt.tiagodiasduarte.cabitools.sdk.data.http.HttpLogsInterceptor
-import pt.tiagodiasduarte.cabitools.sdk.data.local.HttpLogsStore
+import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpHeader
+import pt.tiagodiasduarte.cabitools.sdk.infrastructure.HttpLogs
 
 @RunWith(AndroidJUnit4::class)
 class CabitoolsHttpInterceptorTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
+    private val server = MockWebServer()
+
+    @After
+    fun tearDown() = server.shutdown()
 
     @Test
-    fun `given a retention option when the interceptor is created then it records into the shared store`() {
-        // Given
-        val configure: HttpLogsConfig.() -> Unit = { retention = Retention.ONE_WEEK }
+    fun `given a configured interceptor when a call is made then it is recorded with the configured redaction`() =
+        runTest {
+            // Given
+            server.enqueue(MockResponse().setBody("ok"))
+            val interceptor = Cabitools.httpInterceptor(context) {
+                retention = Retention.ONE_WEEK
+                redactHeaders("X-Api-Key")
+            }
+            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-        // When
-        val interceptor = Cabitools.httpInterceptor(context, configure)
+            // When
+            client.newCall(Request.Builder().url(server.url("/orders")).header("X-Api-Key", "secret").build())
+                .execute().use { it.body?.string() }
 
-        // Then
-        assertTrue(interceptor is HttpLogsInterceptor)
-        assertEquals(Retention.ONE_WEEK.millis, HttpLogsStore.get(context).retentionMillis)
-    }
-
-    @Test
-    fun `given two interceptors with different retention when both are created then the latest applies`() {
-        // Given
-        Cabitools.httpInterceptor(context) { retention = Retention.ONE_WEEK }
-
-        // When
-        Cabitools.httpInterceptor(context) { retention = Retention.ONE_HOUR }
-
-        // Then
-        assertEquals(Retention.ONE_HOUR.millis, HttpLogsStore.get(context).retentionMillis)
-    }
+            // Then
+            val repository = HttpLogs.repository(context)
+            val item = repository.observeLogs().first { logs -> logs.isNotEmpty() }.single()
+            assertEquals(server.url("/orders").toString(), item.url)
+            val headers = repository.getLog(item.id)?.request?.headers
+            assertEquals(listOf(HttpHeader("X-Api-Key", "****")), headers)
+        }
 }

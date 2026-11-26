@@ -85,16 +85,16 @@ Alternative: a global dependency holder in presentation, set by the application 
 All modules use `explicitApi()`. Declarations used by another module become `public`:
 
 - domain: models, `ContentTypes`, repository interfaces, use cases.
-- infrastructure: the repository implementations, `AndroidDeviceBuildSource`, `HttpLogsStore` (its `get`, `retentionMillis` and `save`), `HttpLogsInterceptor`, `HeaderRules`.
+- infrastructure: `AppInfoRepositoryImpl`, `DeviceInfoRepositoryImpl` (public no-argument constructor; the `DeviceBuildSource` one stays internal), `HeaderRules` (a data class of the header options) and `HttpLogs`, a small entry point with `interceptor(context, retentionMillis, headerRules, maxContentLength)` and `repository(context)`.
 - presentation: `PresentationDependencies`, `CabitoolsNavHost`, `CabitoolsTheme`.
 
-Everything else (DAO, entities, capture helpers, ViewModels, screens, formatting) stays `internal`. Test-only accessors (`HttpLogsStore.saveAsync`) stay `internal`, with their tests in the same module.
+Everything else stays `internal`, including `HttpLogsStore`, `HttpLogsInterceptor`, `HttpLogSink`, the DAO and the Room entities: making the interceptor or the store public would have forced the sink, the DAO and the entities public too, so `HttpLogs` hands out only an `Interceptor` and a `HttpLogsRepository`. ViewModels, screens and formatting stay `internal` to presentation. Test-only accessors (`HttpLogsStore.saveAsync`) stay `internal`, with their tests in the same module.
 
 ### Build setup
 
 - domain applies `org.jetbrains.kotlin.jvm`, pinned to the catalog `kotlin` version (AGP's 2.2.10), with Java 11, detekt and Kover. The first task builds it before anything moves, to confirm the plugin coexists with AGP's built-in Kotlin.
 - infrastructure takes Room, KSP and the schema export (the directory follows the database class's new package); presentation takes Compose, Navigation 3, lifecycle and the theme; the application module keeps OkHttp `compileOnly` for the public `Interceptor` type, as does infrastructure.
-- Kover is applied to all four modules; the application module adds `kover(project(...))` dependencies on the other three, so `:cabitools-sdk-application:koverVerify` checks the merged report at 90%. Exclusions move with the code (Activity and `di` in application, theme and Composables in presentation, Room `*_Impl` in infrastructure).
+- Kover is applied to all four modules; the application module adds `kover(project(...))` dependencies on the other three, so `:cabitools-sdk-application:koverVerify` checks the merged report at 90%. The merged report uses the application module's filters, so all exclusions (Activity, `di`, theme, Composables, Room `*_Impl`) are declared there, with their package names updated.
 - `checkNoOpApi` compares the compiled classes of `:cabitools-sdk-application` and `:cabitools-sdk-application-no-op`; CI runs `:cabitools-sdk-application:koverVerify` instead of `:sdk:koverVerify`.
 - The sample app depends on `:cabitools-sdk-application` (debug, QA) and `:cabitools-sdk-application-no-op` (release).
 

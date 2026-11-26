@@ -1,10 +1,9 @@
 package pt.tiagodiasduarte.cabitools.sdk.di
 
 import android.content.Context
-import pt.tiagodiasduarte.cabitools.sdk.data.AppInfoRepositoryImpl
-import pt.tiagodiasduarte.cabitools.sdk.data.DeviceInfoRepositoryImpl
-import pt.tiagodiasduarte.cabitools.sdk.data.HttpLogsRepositoryImpl
-import pt.tiagodiasduarte.cabitools.sdk.data.local.HttpLogsStore
+import pt.tiagodiasduarte.cabitools.sdk.infrastructure.AppInfoRepositoryImpl
+import pt.tiagodiasduarte.cabitools.sdk.infrastructure.DeviceInfoRepositoryImpl
+import pt.tiagodiasduarte.cabitools.sdk.infrastructure.HttpLogs
 import pt.tiagodiasduarte.cabitools.sdk.domain.repository.AppInfoRepository
 import pt.tiagodiasduarte.cabitools.sdk.domain.repository.DeviceInfoRepository
 import pt.tiagodiasduarte.cabitools.sdk.domain.repository.HttpLogsRepository
@@ -22,5 +21,5 @@ internal class SdkContainer(context: Context) {
     val getAppInfo: GetAppInfoUseCase by lazy { GetAppInfoUseCase(appInfoRepository) }
     val getDeviceInfo: GetDeviceInfoUseCase by lazy { GetDeviceInfoUseCase(deviceInfoRepository) }
 
-    val httpLogsRepository: HttpLogsRepository by lazy { HttpLogsRepositoryImpl(HttpLogsStore.get(appContext)) }
+    val httpLogsRepository: HttpLogsRepository by lazy { HttpLogs.repository(appContext) }
 }

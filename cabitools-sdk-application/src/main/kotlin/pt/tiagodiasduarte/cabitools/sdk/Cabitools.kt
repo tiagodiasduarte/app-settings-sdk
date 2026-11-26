@@ -5,8 +5,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import okhttp3.Interceptor
-import pt.tiagodiasduarte.cabitools.sdk.data.http.HttpLogsInterceptor
-import pt.tiagodiasduarte.cabitools.sdk.data.local.HttpLogsStore
+import pt.tiagodiasduarte.cabitools.sdk.infrastructure.HttpLogs
 import pt.tiagodiasduarte.cabitools.sdk.presentation.CabitoolsActivity
 
 /**
@@ -48,10 +47,8 @@ public object Cabitools {
     @JvmStatic
     public fun httpInterceptor(context: Context, configure: HttpLogsConfig.() -> Unit = {}): Interceptor {
         val config = HttpLogsConfig().apply(configure)
-        val store = HttpLogsStore.get(context)
         // One database per process: the most recently created interceptor's retention applies.
-        store.retentionMillis = config.retention.millis
-        return HttpLogsInterceptor(store, config.toHeaderRules(), config.maxContentLength)
+        return HttpLogs.interceptor(context, config.retention.millis, config.toHeaderRules(), config.maxContentLength)
     }
 }
 

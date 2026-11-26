@@ -1,14 +1,13 @@
 package pt.tiagodiasduarte.cabitools.sdk
 
-import okhttp3.Headers
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpHeader
+import pt.tiagodiasduarte.cabitools.sdk.infrastructure.http.HeaderRules
 
 class HttpLogsConfigMappingTest {
 
     @Test
-    fun `given header options when they are mapped then the rules redact and hide those headers`() {
+    fun `given header options when they are mapped then the rules carry the same options`() {
         // Given
         val config = HttpLogsConfig().apply {
             redactHeaders("X-Api-Key")
@@ -20,17 +19,17 @@ class HttpLogsConfigMappingTest {
 
         // Then
         assertEquals(
-            listOf(HttpHeader("Authorization", "****"), HttpHeader("X-Api-Key", "****"), HttpHeader("Accept", "*/*")),
-            rules.apply(
-                Headers.headersOf(
-                    "Authorization", "Bearer a", "X-Api-Key", "k", "X-Internal-Trace", "t", "Accept", "*/*",
-                ),
+            HeaderRules(
+                redactDefaultHeaders = true,
+                redactedHeaders = setOf("x-api-key"),
+                hiddenHeaders = setOf("x-internal-trace"),
             ),
+            rules,
         )
     }
 
     @Test
-    fun `given default redaction turned off when it is mapped then sensitive headers are kept`() {
+    fun `given default redaction turned off when it is mapped then the rules turn it off too`() {
         // Given
         val config = HttpLogsConfig().apply { redactDefaultHeaders = false }
 
@@ -38,6 +37,6 @@ class HttpLogsConfigMappingTest {
         val rules = config.toHeaderRules()
 
         // Then
-        assertEquals(listOf(HttpHeader("Cookie", "a=1")), rules.apply(Headers.headersOf("Cookie", "a=1")))
+        assertEquals(false, rules.redactDefaultHeaders)
     }
 }

@@ -15,20 +15,20 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import pt.tiagodiasduarte.cabitools.sdk.di.SdkContainer
-import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabiToolsRoute
-import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabiToolsTheme
+import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabitoolsRoute
+import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabitoolsTheme
 
 @Config(qualifiers = "w411dp-h891dp")
 @RunWith(AndroidJUnit4::class)
-class CabiToolsNavHostTest {
+class CabitoolsNavHostTest {
 
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
 
     private fun showNavHost() {
         composeRule.setContent {
-            CabiToolsTheme(dynamicColor = false) {
-                CabiToolsNavHost(SdkContainer(composeRule.activity))
+            CabitoolsTheme(dynamicColor = false) {
+                CabitoolsNavHost(SdkContainer(composeRule.activity))
             }
         }
         composeRule.waitUntil(TIMEOUT_MS) {
@@ -81,10 +81,10 @@ class CabiToolsNavHostTest {
     @Test
     fun `given routes when they are saved and restored then the same back stack comes back`() {
         // Given
-        val routes = listOf(CabiToolsRoute.Settings, CabiToolsRoute.Logs, CabiToolsRoute.LogDetail(42L))
+        val routes = listOf(CabitoolsRoute.Settings, CabitoolsRoute.Logs, CabitoolsRoute.LogDetail(42L))
 
         // When
-        val restored = routes.map(CabiToolsRoute::encode).map(CabiToolsRoute::decode)
+        val restored = routes.map(CabitoolsRoute::encode).map(CabitoolsRoute::decode)
 
         // Then
         assertEquals(routes, restored)

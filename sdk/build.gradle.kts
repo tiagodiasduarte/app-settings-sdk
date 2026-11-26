@@ -72,7 +72,7 @@ kover {
                     "pt.tiagodiasduarte.cabitools.sdk.BuildConfig",
 
                     // Activity, DI and theme
-                    "pt.tiagodiasduarte.cabitools.sdk.presentation.CabiToolsActivity*",
+                    "pt.tiagodiasduarte.cabitools.sdk.presentation.CabitoolsActivity*",
                     "pt.tiagodiasduarte.cabitools.sdk.di.*",
                     "pt.tiagodiasduarte.cabitools.sdk.presentation.theme.*",
                 )

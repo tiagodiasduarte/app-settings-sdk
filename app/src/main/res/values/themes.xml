@@ -1,4 +1,4 @@
 <resources>
     <!-- Window theme only; all UI is drawn with Compose (see MainActivity). -->
-    <style name="Theme.CabiToolsSample" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.CabitoolsSample" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

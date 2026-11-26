@@ -27,7 +27,7 @@ internal data class InfoRowUi(
 /** A label that opens another SDK screen when selected. */
 internal data class NavigationRowUi(
     @StringRes override val labelRes: Int,
-    val destination: CabiToolsRoute,
+    val destination: CabitoolsRoute,
 ) : RowUi
 
 /** Text that is either a literal value or a string resource resolved at render time. */

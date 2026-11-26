@@ -15,14 +15,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class CabiToolsTest {
+class CabitoolsTest {
 
     @get:Rule
     val composeRule = createEmptyComposeRule()
 
     private fun waitForSettingsScreen() {
         composeRule.waitUntil(TIMEOUT_MS) {
-            composeRule.onAllNodesWithText("CabiTools").fetchSemanticsNodes().isNotEmpty()
+            composeRule.onAllNodesWithText("Cabitools").fetchSemanticsNodes().isNotEmpty()
         }
         composeRule.onNodeWithText("Application").assertIsDisplayed()
         composeRule.onNodeWithText("Device").assertIsDisplayed()
@@ -32,7 +32,7 @@ class CabiToolsTest {
     fun givenSettingsOpenedFromAnActivity_whenBackIsPressed_thenTheHostActivityIsResumed() {
         // Given
         ActivityScenario.launch(HostActivity::class.java).use { scenario ->
-            scenario.onActivity { CabiTools.open(it) }
+            scenario.onActivity { Cabitools.open(it) }
             waitForSettingsScreen()
 
             // When
@@ -49,7 +49,7 @@ class CabiToolsTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
 
         // When
-        CabiTools.open(appContext)
+        Cabitools.open(appContext)
 
         // Then
         waitForSettingsScreen()
@@ -60,7 +60,7 @@ class CabiToolsTest {
     fun givenTheLogsScreenOpenedFromSettings_whenBackIsPressed_thenTheSettingsScreenIsShownAgain() {
         // Given
         ActivityScenario.launch(HostActivity::class.java).use { scenario ->
-            scenario.onActivity { CabiTools.open(it) }
+            scenario.onActivity { Cabitools.open(it) }
             waitForSettingsScreen()
             composeRule.onNodeWithText("Open Logs").performClick()
             composeRule.onNodeWithText("HTTP logs").assertIsDisplayed()

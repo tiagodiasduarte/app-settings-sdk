@@ -23,13 +23,13 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pt.tiagodiasduarte.cabitools.sdk.R
-import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabiToolsRoute
+import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabitoolsRoute
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.InfoRowUi
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.NavigationRowUi
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.SectionUi
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.SettingsUiState
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.UiText
-import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabiToolsTheme
+import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabitoolsTheme
 
 internal const val SETTINGS_LIST_TAG = "cabitools_list"
 
@@ -38,7 +38,7 @@ internal const val SETTINGS_LIST_TAG = "cabitools_list"
 internal fun SettingsScreen(
     uiState: SettingsUiState,
     modifier: Modifier = Modifier,
-    onNavigate: (CabiToolsRoute) -> Unit = {},
+    onNavigate: (CabitoolsRoute) -> Unit = {},
 ) {
     Scaffold(
         modifier = modifier,
@@ -85,7 +85,7 @@ private fun InfoRow(row: InfoRowUi) {
 }
 
 @Composable
-private fun NavigationRow(row: NavigationRowUi, onNavigate: (CabiToolsRoute) -> Unit) {
+private fun NavigationRow(row: NavigationRowUi, onNavigate: (CabitoolsRoute) -> Unit) {
     ListItem(
         headlineContent = { Text(stringResource(row.labelRes)) },
         trailingContent = { Icon(painterResource(R.drawable.cabitools_ic_chevron_right), contentDescription = null) },
@@ -118,7 +118,7 @@ private val previewState = SettingsUiState(
         ),
         SectionUi(
             R.string.cabitools_section_logs,
-            listOf(NavigationRowUi(R.string.cabitools_label_open_logs, CabiToolsRoute.Logs)),
+            listOf(NavigationRowUi(R.string.cabitools_label_open_logs, CabitoolsRoute.Logs)),
         ),
     ),
 )
@@ -127,5 +127,5 @@ private val previewState = SettingsUiState(
 @Preview(name = "Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun SettingsScreenPreview() {
-    CabiToolsTheme(dynamicColor = false) { SettingsScreen(previewState) }
+    CabitoolsTheme(dynamicColor = false) { SettingsScreen(previewState) }
 }

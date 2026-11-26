@@ -11,7 +11,7 @@ import pt.tiagodiasduarte.cabitools.sdk.data.http.HttpLogsInterceptor
 import pt.tiagodiasduarte.cabitools.sdk.data.local.HttpLogsStore
 
 @RunWith(AndroidJUnit4::class)
-class CabiToolsHttpInterceptorTest {
+class CabitoolsHttpInterceptorTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
 
@@ -21,7 +21,7 @@ class CabiToolsHttpInterceptorTest {
         val configure: HttpLogsConfig.() -> Unit = { retention = Retention.ONE_WEEK }
 
         // When
-        val interceptor = CabiTools.httpInterceptor(context, configure)
+        val interceptor = Cabitools.httpInterceptor(context, configure)
 
         // Then
         assertTrue(interceptor is HttpLogsInterceptor)
@@ -31,10 +31,10 @@ class CabiToolsHttpInterceptorTest {
     @Test
     fun `given two interceptors with different retention when both are created then the latest applies`() {
         // Given
-        CabiTools.httpInterceptor(context) { retention = Retention.ONE_WEEK }
+        Cabitools.httpInterceptor(context) { retention = Retention.ONE_WEEK }
 
         // When
-        CabiTools.httpInterceptor(context) { retention = Retention.ONE_HOUR }
+        Cabitools.httpInterceptor(context) { retention = Retention.ONE_HOUR }
 
         // Then
         assertEquals(Retention.ONE_HOUR, HttpLogsStore.get(context).retention)

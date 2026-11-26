@@ -19,7 +19,7 @@ internal abstract class HttpLogsDatabase : RoomDatabase() {
     companion object {
         const val NAME = "cabitools_http_logs.db"
 
-        /** The database's name before the SDK was renamed to CabiTools. Deleted so it doesn't stay on devices. */
+        /** The database's name before the SDK was renamed to Cabitools. Deleted so it doesn't stay on devices. */
         const val LEGACY_NAME = "appsettings_http_logs.db"
 
         fun create(context: Context): HttpLogsDatabase {

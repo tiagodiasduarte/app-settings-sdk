@@ -22,16 +22,16 @@ import pt.tiagodiasduarte.cabitools.sdk.presentation.logs.LogsScreen
 import pt.tiagodiasduarte.cabitools.sdk.presentation.logs.LogsViewModel
 import pt.tiagodiasduarte.cabitools.sdk.presentation.logs.copyToClipboard
 import pt.tiagodiasduarte.cabitools.sdk.presentation.logs.shareText
-import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabiToolsRoute
+import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabitoolsRoute
 
 /**
- * The screens of the CabiTools Activity: Settings, the logs list and a log's detail.
+ * The screens of the Cabitools Activity: Settings, the logs list and a log's detail.
  * Back pops the stack. On Settings, the system's default back closes the Activity.
  */
 @Composable
-internal fun CabiToolsNavHost(container: SdkContainer) {
+internal fun CabitoolsNavHost(container: SdkContainer) {
     val backStack = rememberSaveable(saver = backStackSaver) {
-        mutableStateListOf<CabiToolsRoute>(CabiToolsRoute.Settings)
+        mutableStateListOf<CabitoolsRoute>(CabitoolsRoute.Settings)
     }
     NavDisplay(
         backStack = backStack,
@@ -41,22 +41,22 @@ internal fun CabiToolsNavHost(container: SdkContainer) {
             rememberViewModelStoreNavEntryDecorator(),
         ),
         entryProvider = entryProvider {
-            entry<CabiToolsRoute.Settings> {
+            entry<CabitoolsRoute.Settings> {
                 val viewModel: SettingsViewModel = viewModel(factory = SettingsViewModel.factory(container))
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                 SettingsScreen(uiState, onNavigate = { backStack.add(it) })
             }
-            entry<CabiToolsRoute.Logs> {
+            entry<CabitoolsRoute.Logs> {
                 val viewModel: LogsViewModel = viewModel(factory = LogsViewModel.factory(container))
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                 LogsScreen(
                     uiState = uiState,
                     onBack = { backStack.removeAt(backStack.lastIndex) },
                     onClear = viewModel::clear,
-                    onOpen = { id -> backStack.add(CabiToolsRoute.LogDetail(id)) },
+                    onOpen = { id -> backStack.add(CabitoolsRoute.LogDetail(id)) },
                 )
             }
-            entry<CabiToolsRoute.LogDetail> { route ->
+            entry<CabitoolsRoute.LogDetail> { route ->
                 val viewModel: LogDetailViewModel = viewModel(factory = LogDetailViewModel.factory(route.id, container))
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                 val context = LocalContext.current
@@ -72,7 +72,7 @@ internal fun CabiToolsNavHost(container: SdkContainer) {
     )
 }
 
-private val backStackSaver: Saver<SnapshotStateList<CabiToolsRoute>, ArrayList<String>> = Saver(
-    save = { stack -> ArrayList(stack.map(CabiToolsRoute::encode)) },
-    restore = { saved -> mutableStateListOf<CabiToolsRoute>().apply { addAll(saved.map(CabiToolsRoute::decode)) } },
+private val backStackSaver: Saver<SnapshotStateList<CabitoolsRoute>, ArrayList<String>> = Saver(
+    save = { stack -> ArrayList(stack.map(CabitoolsRoute::encode)) },
+    restore = { saved -> mutableStateListOf<CabitoolsRoute>().apply { addAll(saved.map(CabitoolsRoute::decode)) } },
 )

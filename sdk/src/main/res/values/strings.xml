@@ -1,5 +1,5 @@
 <resources>
-    <string name="cabitools_title">CabiTools</string>
+    <string name="cabitools_title">Cabitools</string>
 
     <string name="cabitools_section_application">Application</string>
     <string name="cabitools_label_version_name">Version name</string>

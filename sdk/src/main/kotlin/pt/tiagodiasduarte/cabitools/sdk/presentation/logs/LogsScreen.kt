@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pt.tiagodiasduarte.cabitools.sdk.R
-import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabiToolsTheme
+import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabitoolsTheme
 
 internal const val LOGS_LIST_TAG = "cabitools_logs_list"
 
@@ -118,13 +118,13 @@ private val previewState = LogsUiState(
 @Preview(name = "Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun LogsScreenPreview() {
-    CabiToolsTheme(dynamicColor = false) { LogsScreen(previewState, onBack = {}, onClear = {}, onOpen = {}) }
+    CabitoolsTheme(dynamicColor = false) { LogsScreen(previewState, onBack = {}, onClear = {}, onOpen = {}) }
 }
 
 @Preview(name = "Empty")
 @Composable
 private fun LogsScreenEmptyPreview() {
-    CabiToolsTheme(dynamicColor = false) {
+    CabitoolsTheme(dynamicColor = false) {
         LogsScreen(LogsUiState(loaded = true), onBack = {}, onClear = {}, onOpen = {})
     }
 }

@@ -16,13 +16,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import pt.tiagodiasduarte.cabitools.sdk.R
-import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabiToolsRoute
+import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabitoolsRoute
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.InfoRowUi
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.NavigationRowUi
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.SectionUi
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.SettingsUiState
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.UiText
-import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabiToolsTheme
+import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabitoolsTheme
 
 // Phone-sized screen, so every row of the default state fits without scrolling.
 @Config(qualifiers = "w411dp-h891dp")
@@ -54,15 +54,15 @@ class SettingsScreenTest {
             ),
             SectionUi(
                 R.string.cabitools_section_logs,
-                listOf(NavigationRowUi(R.string.cabitools_label_open_logs, CabiToolsRoute.Logs)),
+                listOf(NavigationRowUi(R.string.cabitools_label_open_logs, CabitoolsRoute.Logs)),
             ),
         ),
     )
 
-    private val navigations = mutableListOf<CabiToolsRoute>()
+    private val navigations = mutableListOf<CabitoolsRoute>()
 
     private fun setContent(uiState: SettingsUiState) = composeRule.setContent {
-        CabiToolsTheme(dynamicColor = false) { SettingsScreen(uiState, onNavigate = { navigations += it }) }
+        CabitoolsTheme(dynamicColor = false) { SettingsScreen(uiState, onNavigate = { navigations += it }) }
     }
 
     @Test
@@ -136,6 +136,6 @@ class SettingsScreenTest {
         composeRule.onNodeWithText("Open Logs").performClick()
 
         // Then
-        assertEquals(listOf<CabiToolsRoute>(CabiToolsRoute.Logs), navigations)
+        assertEquals(listOf<CabitoolsRoute>(CabitoolsRoute.Logs), navigations)
     }
 }

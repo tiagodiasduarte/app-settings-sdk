@@ -1,4 +1,4 @@
 <resources>
-    <!-- Window theme for the SDK screen only; content is drawn by Compose (CabiToolsTheme). -->
+    <!-- Window theme for the SDK screen only; content is drawn by Compose (CabitoolsTheme). -->
     <style name="cabitools_Theme" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

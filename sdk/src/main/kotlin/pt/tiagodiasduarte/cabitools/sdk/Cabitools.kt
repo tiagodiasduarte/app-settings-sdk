@@ -8,19 +8,19 @@ import okhttp3.Interceptor
 import pt.tiagodiasduarte.cabitools.sdk.data.http.HeaderRules
 import pt.tiagodiasduarte.cabitools.sdk.data.http.HttpLogsInterceptor
 import pt.tiagodiasduarte.cabitools.sdk.data.local.HttpLogsStore
-import pt.tiagodiasduarte.cabitools.sdk.presentation.CabiToolsActivity
+import pt.tiagodiasduarte.cabitools.sdk.presentation.CabitoolsActivity
 
 /**
- * Entry point of the CabiTools SDK.
+ * Entry point of the Cabitools SDK.
  *
  * ```
- * CabiTools.open(context)
+ * Cabitools.open(context)
  * ```
  */
-public object CabiTools {
+public object Cabitools {
 
     /**
-     * Opens the CabiTools screen on top of the current screen.
+     * Opens the Cabitools screen on top of the current screen.
      *
      * Any [Context] works. When it is not (or does not wrap) an [Activity], for example the
      * Application context, the screen is started with [Intent.FLAG_ACTIVITY_NEW_TASK].
@@ -28,7 +28,7 @@ public object CabiTools {
      */
     @JvmStatic
     public fun open(context: Context) {
-        val intent = Intent(context, CabiToolsActivity::class.java)
+        val intent = Intent(context, CabitoolsActivity::class.java)
         if (context.findActivity() == null) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
@@ -40,10 +40,10 @@ public object CabiTools {
      *
      * ```
      * OkHttpClient.Builder()
-     *     .addInterceptor(CabiTools.httpInterceptor(context) { retention = Retention.ONE_DAY })
+     *     .addInterceptor(Cabitools.httpInterceptor(context) { retention = Retention.ONE_DAY })
      * ```
      *
-     * Every call through that client is recorded and shown in the CabiTools screen.
+     * Every call through that client is recorded and shown in the Cabitools screen.
      * Use `:sdk-no-op` in production builds: its interceptor records nothing.
      */
     @JvmStatic

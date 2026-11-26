@@ -5,18 +5,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import pt.tiagodiasduarte.cabitools.sdk.di.SdkContainer
-import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabiToolsTheme
+import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabitoolsTheme
 
-/** Hosts the CabiTools screens. Not exported: only reachable through `CabiTools.open`. */
-internal class CabiToolsActivity : ComponentActivity() {
+/** Hosts the Cabitools screens. Not exported: only reachable through `Cabitools.open`. */
+internal class CabitoolsActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val container = SdkContainer(applicationContext)
         setContent {
-            CabiToolsTheme {
-                CabiToolsNavHost(container)
+            CabitoolsTheme {
+                CabitoolsNavHost(container)
             }
         }
     }

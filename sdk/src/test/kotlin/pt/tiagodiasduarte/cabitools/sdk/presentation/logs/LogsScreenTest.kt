@@ -16,7 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabiToolsTheme
+import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabitoolsTheme
 
 @Config(qualifiers = "w411dp-h891dp")
 @RunWith(AndroidJUnit4::class)
@@ -30,7 +30,7 @@ class LogsScreenTest {
     private var backs = 0
 
     private fun setContent(state: () -> LogsUiState) = composeRule.setContent {
-        CabiToolsTheme(dynamicColor = false) {
+        CabitoolsTheme(dynamicColor = false) {
             LogsScreen(state(), onBack = { backs++ }, onClear = { clears++ }, onOpen = { opened += it })
         }
     }

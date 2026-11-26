@@ -22,7 +22,7 @@ class NoOpHttpInterceptorTest {
     fun `given the no-op interceptor when a call is made then the response passes through unchanged`() {
         // Given
         server.enqueue(MockResponse().setResponseCode(201).setHeader("X-Test", "yes").setBody("hello"))
-        val interceptor = CabiTools.httpInterceptor(context) {
+        val interceptor = Cabitools.httpInterceptor(context) {
             retention = Retention.ONE_HOUR
             redactHeaders("Authorization")
             hideHeaders("X-Trace")
@@ -48,7 +48,7 @@ class NoOpHttpInterceptorTest {
 
         // When
         val error = assertThrows(IllegalArgumentException::class.java) {
-            CabiTools.httpInterceptor(context, configure)
+            Cabitools.httpInterceptor(context, configure)
         }
 
         // Then
@@ -61,7 +61,7 @@ class NoOpHttpInterceptorTest {
         val caller = context
 
         // When
-        CabiTools.open(caller)
+        Cabitools.open(caller)
 
         // Then
         assertEquals(null, caller.baseContext)

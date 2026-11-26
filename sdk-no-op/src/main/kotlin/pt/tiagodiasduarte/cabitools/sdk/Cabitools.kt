@@ -4,12 +4,12 @@ import android.content.Context
 import okhttp3.Interceptor
 
 /**
- * Production stand-in for the CabiTools SDK entry point. It has the same API as `:sdk`,
+ * Production stand-in for the Cabitools SDK entry point. It has the same API as `:sdk`,
  * so host code compiles in every build, but it does nothing.
  */
-public object CabiTools {
+public object Cabitools {
 
-    /** Does nothing: production builds have no CabiTools screen. */
+    /** Does nothing: production builds have no Cabitools screen. */
     @JvmStatic
     @Suppress("UNUSED_PARAMETER", "UnusedParameter")
     public fun open(context: Context) {

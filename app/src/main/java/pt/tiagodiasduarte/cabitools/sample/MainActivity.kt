@@ -28,11 +28,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import pt.tiagodiasduarte.cabitools.sdk.CabiTools
+import pt.tiagodiasduarte.cabitools.sdk.Cabitools
 import pt.tiagodiasduarte.cabitools.sdk.Retention
 import java.io.IOException
 
-/** Sample host app: opens the CabiTools screen and makes HTTP calls that it records. */
+/** Sample host app: opens the Cabitools screen and makes HTTP calls that it records. */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -49,8 +49,8 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Button(onClick = { CabiTools.open(context) }) {
-                            Text("Open CabiTools")
+                        Button(onClick = { Cabitools.open(context) }) {
+                            Text("Open Cabitools")
                         }
                         OutlinedButton(onClick = { scope.launch { result = sampleRequest(client) } }) {
                             Text("Make sample request")
@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
 /** The app's own OkHttp client, as a Retrofit setup would build it, with the SDK interceptor added. */
 private fun sampleClient(context: Context): OkHttpClient = OkHttpClient.Builder()
     .addInterceptor(
-        CabiTools.httpInterceptor(context) {
+        Cabitools.httpInterceptor(context) {
             retention = Retention.ONE_DAY
             maxContentLength = MAX_STORED_BODY_BYTES
             redactHeaders("X-Api-Key")

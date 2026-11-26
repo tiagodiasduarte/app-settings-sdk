@@ -19,7 +19,7 @@ private const val DAYS_PER_WEEK = 7L
  * Configuration of the HTTP logs interceptor, set in code by the integrating developer:
  *
  * ```
- * CabiTools.httpInterceptor(context) {
+ * Cabitools.httpInterceptor(context) {
  *     retention = Retention.ONE_DAY
  *     maxContentLength = 250_000L
  *     redactHeaders("X-Api-Key")

@@ -75,7 +75,7 @@ internal class HttpLogsStore(
 
     companion object {
         const val MAX_LOGS = 500
-        private const val TAG = "CabiToolsHttpLogs"
+        private const val TAG = "CabitoolsHttpLogs"
 
         @Volatile
         private var instance: HttpLogsStore? = null

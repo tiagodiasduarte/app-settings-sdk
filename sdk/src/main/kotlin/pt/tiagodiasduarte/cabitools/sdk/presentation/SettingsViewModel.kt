@@ -18,7 +18,7 @@ import pt.tiagodiasduarte.cabitools.sdk.domain.model.AppInfo
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.DeviceDetails
 import pt.tiagodiasduarte.cabitools.sdk.domain.usecase.GetAppInfoUseCase
 import pt.tiagodiasduarte.cabitools.sdk.domain.usecase.GetDeviceInfoUseCase
-import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabiToolsRoute
+import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabitoolsRoute
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.InfoRowUi
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.NavigationRowUi
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.SectionUi
@@ -77,5 +77,5 @@ private fun DeviceDetails.toSection() = SectionUi(
 
 private fun logsSection() = SectionUi(
     titleRes = R.string.cabitools_section_logs,
-    rows = listOf(NavigationRowUi(R.string.cabitools_label_open_logs, CabiToolsRoute.Logs)),
+    rows = listOf(NavigationRowUi(R.string.cabitools_label_open_logs, CabitoolsRoute.Logs)),
 )

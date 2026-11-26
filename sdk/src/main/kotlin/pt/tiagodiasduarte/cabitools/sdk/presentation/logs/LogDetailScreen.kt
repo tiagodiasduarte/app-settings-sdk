@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pt.tiagodiasduarte.cabitools.sdk.R
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpHeader
-import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabiToolsTheme
+import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabitoolsTheme
 
 internal const val LOG_DETAIL_CONTENT_TAG = "cabitools_log_detail_content"
 
@@ -213,7 +213,7 @@ private val previewDetail = LogDetailUi(
 @Preview(name = "Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun LogDetailScreenPreview() {
-    CabiToolsTheme(dynamicColor = false) {
+    CabitoolsTheme(dynamicColor = false) {
         LogDetailScreen(LogDetailUiState(loaded = true, detail = previewDetail), onBack = {}, onCopy = {}, onShare = {})
     }
 }

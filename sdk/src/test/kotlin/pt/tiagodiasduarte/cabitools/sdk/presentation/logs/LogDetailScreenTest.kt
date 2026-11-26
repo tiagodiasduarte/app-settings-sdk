@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import pt.tiagodiasduarte.cabitools.sdk.R
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpHeader
-import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabiToolsTheme
+import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabitoolsTheme
 
 @Config(qualifiers = "w411dp-h891dp")
 @RunWith(AndroidJUnit4::class)
@@ -30,7 +30,7 @@ class LogDetailScreenTest {
     private val shared = mutableListOf<String>()
 
     private fun setContent(state: LogDetailUiState) = composeRule.setContent {
-        CabiToolsTheme(dynamicColor = false) {
+        CabitoolsTheme(dynamicColor = false) {
             LogDetailScreen(state, onBack = { backs++ }, onCopy = { copied += it }, onShare = { shared += it })
         }
     }

@@ -1,4 +1,4 @@
-# CabiTools SDK
+# Cabitools SDK
 
 Named after *cabidela*, my favourite dish: a bit of everything you need, in one pot.
 
@@ -30,12 +30,12 @@ Open the screen from anywhere you have a `Context`:
 
 ```kotlin
 val context = LocalContext.current
-Button(onClick = { CabiTools.open(context) }) {
-    Text("Open CabiTools")
+Button(onClick = { Cabitools.open(context) }) {
+    Text("Open Cabitools")
 }
 ```
 
-`CabiTools.open` works with an Activity or the Application context. The screen is an
+`Cabitools.open` works with an Activity or the Application context. The screen is an
 SDK-owned, non-exported Activity that is merged into the host manifest automatically. It
 needs no theme, DI framework or manifest entries from the host app.
 
@@ -47,7 +47,7 @@ that client is recorded and shown under **Logs > Open Logs**:
 ```kotlin
 private fun sampleClient(context: Context): OkHttpClient = OkHttpClient.Builder()
     .addInterceptor(
-        CabiTools.httpInterceptor(context) {
+        Cabitools.httpInterceptor(context) {
             retention = Retention.ONE_DAY
             maxContentLength = MAX_STORED_BODY_BYTES
             redactHeaders("X-Api-Key")
@@ -94,7 +94,7 @@ What to know:
 ## Architecture
 
 ```
-presentation  CabiToolsActivity (Navigation 3 host), Settings, Logs and LogDetail screens and ViewModels
+presentation  CabitoolsActivity (Navigation 3 host), Settings, Logs and LogDetail screens and ViewModels
      |
      v
 domain        AppInfo, DeviceInfo, HttpLog models, use cases, repository interfaces (pure Kotlin)
@@ -104,6 +104,6 @@ data          PackageManager / android.os.Build repositories, HTTP logs intercep
 di            SdkContainer (manual wiring)
 ```
 
-Only `CabiTools` and the HTTP logs configuration (`HttpLogsConfig`, `Retention`, `HttpLogsDsl`)
+Only `Cabitools` and the HTTP logs configuration (`HttpLogsConfig`, `Retention`, `HttpLogsDsl`)
 are public (`explicitApi()` is enabled); everything else is `internal`. `:sdk-no-op` must expose
 exactly the same public API: `./gradlew checkNoOpApi` fails when the two differ.

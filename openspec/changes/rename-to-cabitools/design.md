@@ -21,16 +21,16 @@ See proposal.md - Why. The old name appears in package paths, the public `AppSet
 
 | Old | New |
 |---|---|
-| `AppSettings` (public) | `CabiTools` |
+| `AppSettings` (public) | `Cabitools` |
 | `pt.tiagodiasduarte.appsettings.sdk` | `pt.tiagodiasduarte.cabitools.sdk` (`.noop` for the no-op namespace) |
-| `AppSettingsActivity`, `AppSettingsNavHost`, `AppSettingsRoute`, `AppSettingsTheme` | `CabiToolsActivity`, `CabiToolsNavHost`, `CabiToolsRoute`, `CabiToolsTheme` |
+| `AppSettingsActivity`, `AppSettingsNavHost`, `AppSettingsRoute`, `AppSettingsTheme` | `CabitoolsActivity`, `CabitoolsNavHost`, `CabitoolsRoute`, `CabitoolsTheme` |
 | `appsettings_` resources, `appsettings_Theme` | `cabitools_`, `cabitools_Theme` |
-| "App Settings" screen title | "CabiTools" |
+| "App Settings" screen title | "Cabitools" |
 | `appsettings_http_logs.db` | `cabitools_http_logs.db` |
 | `rootProject.name = "App Settings Sdk"` | `cabitools-sdk` |
-| Sample `pt.tiagodiasduarte.appsettings`, "App Settings Sdk" | `pt.tiagodiasduarte.cabitools.sample`, "CabiTools Sample" |
+| Sample `pt.tiagodiasduarte.appsettings`, "App Settings Sdk" | `pt.tiagodiasduarte.cabitools.sample`, "Cabitools Sample" |
 
-Test classes named after old types follow them (for example `AppSettingsOpenTest` becomes `CabiToolsOpenTest`).
+Test classes named after old types follow them (for example `AppSettingsOpenTest` becomes `CabitoolsOpenTest`).
 
 ### Rename mechanics
 

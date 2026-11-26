@@ -19,7 +19,7 @@ import pt.tiagodiasduarte.cabitools.sdk.domain.repository.AppInfoRepository
 import pt.tiagodiasduarte.cabitools.sdk.domain.repository.DeviceInfoRepository
 import pt.tiagodiasduarte.cabitools.sdk.domain.usecase.GetAppInfoUseCase
 import pt.tiagodiasduarte.cabitools.sdk.domain.usecase.GetDeviceInfoUseCase
-import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabiToolsRoute
+import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabitoolsRoute
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.InfoRowUi
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.NavigationRowUi
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.UiText
@@ -91,7 +91,7 @@ class SettingsViewModelTest {
 
             // Then
             assertEquals(
-                listOf(NavigationRowUi(R.string.cabitools_label_open_logs, CabiToolsRoute.Logs)),
+                listOf(NavigationRowUi(R.string.cabitools_label_open_logs, CabitoolsRoute.Logs)),
                 vm.uiState.value.sections[2].rows,
             )
         }

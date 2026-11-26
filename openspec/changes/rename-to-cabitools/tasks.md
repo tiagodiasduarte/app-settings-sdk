@@ -3,7 +3,7 @@
 ## 1. Rename the code
 
 - [x] 1.1 Move the `:sdk`, `:sdk-no-op` and `:app` sources (main, test, androidTest) to the `pt/tiagodiasduarte/cabitools/sdk` and `pt/tiagodiasduarte/cabitools/sample` directories with `git mv`, and rename files named after old types. Verify that `git status` shows renames, not deletions and additions
-- [x] 1.2 Replace the old names in code, build scripts, manifests and resources per design.md (packages, namespaces, `AppSettings` identifiers, `appsettings_` prefix, "App Settings" strings, root project and sample app names), and move the Room schema export directory. Verify that `./gradlew assembleDebug checkNoOpApi` succeeds and the API dump shows `pt/tiagodiasduarte/cabitools/sdk/CabiTools`
+- [x] 1.2 Replace the old names in code, build scripts, manifests and resources per design.md (packages, namespaces, `AppSettings` identifiers, `appsettings_` prefix, "App Settings" strings, root project and sample app names), and move the Room schema export directory. Verify that `./gradlew assembleDebug checkNoOpApi` succeeds and the API dump shows `pt/tiagodiasduarte/cabitools/sdk/Cabitools`
 - [x] 1.3 Delete the old `appsettings_http_logs.db` when the database is created. Verify with a Robolectric test that an existing old database file is removed and the new one is used
 
 ## 2. Docs

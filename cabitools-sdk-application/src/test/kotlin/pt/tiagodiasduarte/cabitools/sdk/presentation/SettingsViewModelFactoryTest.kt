@@ -17,7 +17,8 @@ class SettingsViewModelFactoryTest {
     fun `given the SDK container when the factory creates the view model then it has a ui state`() {
         // Given
         val context = ApplicationProvider.getApplicationContext<Context>()
-        val factory = SettingsViewModel.factory(SdkContainer(context))
+        val container = SdkContainer(context)
+        val factory = SettingsViewModel.factory(container.getAppInfo, container.getDeviceInfo)
 
         // When
         val viewModel = ViewModelProvider.create(ViewModelStore(), factory)[SettingsViewModel::class]

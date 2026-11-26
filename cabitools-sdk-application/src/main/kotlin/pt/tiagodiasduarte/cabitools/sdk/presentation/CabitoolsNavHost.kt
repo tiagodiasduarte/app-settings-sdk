@@ -15,7 +15,6 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import pt.tiagodiasduarte.cabitools.sdk.R
-import pt.tiagodiasduarte.cabitools.sdk.di.SdkContainer
 import pt.tiagodiasduarte.cabitools.sdk.presentation.logs.LogDetailScreen
 import pt.tiagodiasduarte.cabitools.sdk.presentation.logs.LogDetailViewModel
 import pt.tiagodiasduarte.cabitools.sdk.presentation.logs.LogsScreen
@@ -29,7 +28,7 @@ import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabitoolsRoute
  * Back pops the stack. On Settings, the system's default back closes the Activity.
  */
 @Composable
-internal fun CabitoolsNavHost(container: SdkContainer) {
+internal fun CabitoolsNavHost(dependencies: PresentationDependencies) {
     val backStack = rememberSaveable(saver = backStackSaver) {
         mutableStateListOf<CabitoolsRoute>(CabitoolsRoute.Settings)
     }
@@ -42,12 +41,15 @@ internal fun CabitoolsNavHost(container: SdkContainer) {
         ),
         entryProvider = entryProvider {
             entry<CabitoolsRoute.Settings> {
-                val viewModel: SettingsViewModel = viewModel(factory = SettingsViewModel.factory(container))
+                val viewModel: SettingsViewModel = viewModel(
+                    factory = SettingsViewModel.factory(dependencies.getAppInfo, dependencies.getDeviceInfo),
+                )
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                 SettingsScreen(uiState, onNavigate = { backStack.add(it) })
             }
             entry<CabitoolsRoute.Logs> {
-                val viewModel: LogsViewModel = viewModel(factory = LogsViewModel.factory(container))
+                val viewModel: LogsViewModel =
+                    viewModel(factory = LogsViewModel.factory(dependencies.httpLogsRepository))
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                 LogsScreen(
                     uiState = uiState,
@@ -57,7 +59,9 @@ internal fun CabitoolsNavHost(container: SdkContainer) {
                 )
             }
             entry<CabitoolsRoute.LogDetail> { route ->
-                val viewModel: LogDetailViewModel = viewModel(factory = LogDetailViewModel.factory(route.id, container))
+                val viewModel: LogDetailViewModel = viewModel(
+                    factory = LogDetailViewModel.factory(route.id, dependencies.httpLogsRepository),
+                )
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                 val context = LocalContext.current
                 val copyLabel = stringResource(R.string.cabitools_detail_body)

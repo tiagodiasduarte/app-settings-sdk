@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pt.tiagodiasduarte.cabitools.sdk.R
-import pt.tiagodiasduarte.cabitools.sdk.di.SdkContainer
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.AppInfo
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.DeviceDetails
 import pt.tiagodiasduarte.cabitools.sdk.domain.usecase.GetAppInfoUseCase
@@ -49,9 +48,10 @@ internal class SettingsViewModel(
     }
 
     companion object {
-        fun factory(container: SdkContainer): ViewModelProvider.Factory = viewModelFactory {
-            initializer { SettingsViewModel(container.getAppInfo, container.getDeviceInfo) }
-        }
+        fun factory(getAppInfo: GetAppInfoUseCase, getDeviceInfo: GetDeviceInfoUseCase): ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer { SettingsViewModel(getAppInfo, getDeviceInfo) }
+            }
     }
 }
 

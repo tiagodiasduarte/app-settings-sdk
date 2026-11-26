@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import pt.tiagodiasduarte.cabitools.sdk.R
-import pt.tiagodiasduarte.cabitools.sdk.di.SdkContainer
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.ContentTypes
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpHeader
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpLogDetail
@@ -112,8 +111,8 @@ internal class LogDetailViewModel(
     companion object {
         private const val NONE = "-"
 
-        fun factory(id: Long, container: SdkContainer): ViewModelProvider.Factory = viewModelFactory {
-            initializer { LogDetailViewModel(id, container.httpLogsRepository) }
+        fun factory(id: Long, repository: HttpLogsRepository): ViewModelProvider.Factory = viewModelFactory {
+            initializer { LogDetailViewModel(id, repository) }
         }
     }
 }

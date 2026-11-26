@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import pt.tiagodiasduarte.cabitools.sdk.di.SdkContainer
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpLogItem
 import pt.tiagodiasduarte.cabitools.sdk.domain.repository.HttpLogsRepository
 
@@ -57,8 +56,8 @@ internal class LogsViewModel(
     companion object {
         private const val STOP_TIMEOUT_MS = 5_000L
 
-        fun factory(container: SdkContainer): ViewModelProvider.Factory = viewModelFactory {
-            initializer { LogsViewModel(container.httpLogsRepository) }
+        fun factory(repository: HttpLogsRepository): ViewModelProvider.Factory = viewModelFactory {
+            initializer { LogsViewModel(repository) }
         }
     }
 }

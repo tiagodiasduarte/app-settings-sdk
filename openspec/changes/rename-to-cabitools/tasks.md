@@ -14,7 +14,7 @@
 
 - [x] 3.1 Search the repository for `appsettings`, `AppSettings`, "App Settings" and `app-settings` outside `openspec/changes/archive`, and verify that nothing is found except the old database name in the cleanup code
 - [x] 3.2 Run `./gradlew assembleDebug test :sdk:koverVerify lint detekt checkNoOpApi` and the instrumented tests on an emulator, and verify that all pass
-- [ ] 3.3 Rename the GitHub repository to `cabitools-sdk` and point the local `origin` remote at the new URL. Verify with `git remote -v` and `gh repo view`
+- [x] 3.3 Rename the GitHub repository to `cabitools-sdk` and point the local `origin` remote at the new URL. Verify with `git remote -v` and `gh repo view`
 
 ## Workflow follow-up
 

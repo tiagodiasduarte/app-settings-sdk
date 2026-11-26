@@ -99,6 +99,9 @@ kover {
 }
 
 dependencies {
+    implementation(project(":cabitools-sdk-domain"))
+    implementation(project(":cabitools-sdk-infrastructure"))
+    implementation(project(":cabitools-sdk-presentation"))
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)
@@ -134,4 +137,11 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+}
+
+// Merge the layer modules' coverage into this module's report and 90% verification.
+dependencies {
+    kover(project(":cabitools-sdk-domain"))
+    kover(project(":cabitools-sdk-infrastructure"))
+    kover(project(":cabitools-sdk-presentation"))
 }

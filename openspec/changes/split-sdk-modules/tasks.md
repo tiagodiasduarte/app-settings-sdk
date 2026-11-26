@@ -2,8 +2,8 @@
 
 ## 1. Module scaffolding
 
-- [ ] 1.1 Add the Kotlin JVM plugin (pinned to the catalog `kotlin` version) and `kotlinx-coroutines-core` to the catalog, sorted per the Gradle conventions, and create empty `:cabitools-sdk-domain` (JVM, Java 11, `explicitApi()`, detekt, Kover), `:cabitools-sdk-infrastructure` and `:cabitools-sdk-presentation` (Android library, namespaces `…sdk.infrastructure`/`…sdk.presentation`, `resourcePrefix = "cabitools_"`, `explicitApi()`, detekt, Kover) modules, included in `settings.gradle.kts`. Verify with `./gradlew assemble --configuration-cache`
-- [ ] 1.2 Rename `sdk/` to `cabitools-sdk-application/` and `sdk-no-op/` to `cabitools-sdk-application-no-op/` with `git mv`, update `settings.gradle.kts`, the sample app dependencies, `checkNoOpApi` and CI, and make the application module depend on the three layer modules with `implementation` and merge their coverage. Verify that `./gradlew assembleDebug :cabitools-sdk-application:koverVerify checkNoOpApi` passes with the layer code not yet moved
+- [x] 1.1 Add the Kotlin JVM plugin (pinned to the catalog `kotlin` version) and `kotlinx-coroutines-core` to the catalog, sorted per the Gradle conventions, and create empty `:cabitools-sdk-domain` (JVM, Java 11, `explicitApi()`, detekt, Kover), `:cabitools-sdk-infrastructure` and `:cabitools-sdk-presentation` (Android library, namespaces `…sdk.infrastructure`/`…sdk.presentation`, `resourcePrefix = "cabitools_"`, `explicitApi()`, detekt, Kover) modules, included in `settings.gradle.kts`. Verify with `./gradlew assemble --configuration-cache`
+- [x] 1.2 Rename `sdk/` to `cabitools-sdk-application/` and `sdk-no-op/` to `cabitools-sdk-application-no-op/` with `git mv`, update `settings.gradle.kts`, the sample app dependencies, `checkNoOpApi` and CI, and make the application module depend on the three layer modules with `implementation` and merge their coverage. Verify that `./gradlew assembleDebug :cabitools-sdk-application:koverVerify checkNoOpApi` passes with the layer code not yet moved
 
 ## 2. Domain
 

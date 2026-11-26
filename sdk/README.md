@@ -1,4 +1,6 @@
-# App Settings SDK
+# CabiTools SDK
+
+Named after *cabidela*, my favourite dish: a bit of everything you need, in one pot.
 
 An in-app tools screen for my own apps. It shows these sections, in this order:
 
@@ -28,12 +30,12 @@ Open the screen from anywhere you have a `Context`:
 
 ```kotlin
 val context = LocalContext.current
-Button(onClick = { AppSettings.open(context) }) {
-    Text("Open App Settings")
+Button(onClick = { CabiTools.open(context) }) {
+    Text("Open CabiTools")
 }
 ```
 
-`AppSettings.open` works with an Activity or the Application context. The screen is an
+`CabiTools.open` works with an Activity or the Application context. The screen is an
 SDK-owned, non-exported Activity that is merged into the host manifest automatically. It
 needs no theme, DI framework or manifest entries from the host app.
 
@@ -45,7 +47,7 @@ that client is recorded and shown under **Logs > Open Logs**:
 ```kotlin
 private fun sampleClient(context: Context): OkHttpClient = OkHttpClient.Builder()
     .addInterceptor(
-        AppSettings.httpInterceptor(context) {
+        CabiTools.httpInterceptor(context) {
             retention = Retention.ONE_DAY
             maxContentLength = MAX_STORED_BODY_BYTES
             redactHeaders("X-Api-Key")
@@ -77,7 +79,7 @@ What to know:
   bodies; if you use OkHttp directly, close every `Response`, as OkHttp requires.
 - Binary bodies (images, protobuf...) are recorded by size only. Bodies the app asked to receive
   compressed (its own `Accept-Encoding`) are not stored as text.
-- Logs are stored on the device, in the SDK database `appsettings_http_logs.db`. Anything you
+- Logs are stored on the device, in the SDK database `cabitools_http_logs.db`. Anything you
   don't redact or hide (request and response bodies included) is readable on that device and
   in shared logs. Keep `:sdk` out of production builds.
 - One database serves the whole process. If you create several interceptors with different
@@ -92,7 +94,7 @@ What to know:
 ## Architecture
 
 ```
-presentation  AppSettingsActivity (Navigation 3 host), Settings, Logs and LogDetail screens and ViewModels
+presentation  CabiToolsActivity (Navigation 3 host), Settings, Logs and LogDetail screens and ViewModels
      |
      v
 domain        AppInfo, DeviceInfo, HttpLog models, use cases, repository interfaces (pure Kotlin)
@@ -102,6 +104,6 @@ data          PackageManager / android.os.Build repositories, HTTP logs intercep
 di            SdkContainer (manual wiring)
 ```
 
-Only `AppSettings` and the HTTP logs configuration (`HttpLogsConfig`, `Retention`, `HttpLogsDsl`)
+Only `CabiTools` and the HTTP logs configuration (`HttpLogsConfig`, `Retention`, `HttpLogsDsl`)
 are public (`explicitApi()` is enabled); everything else is `internal`. `:sdk-no-op` must expose
 exactly the same public API: `./gradlew checkNoOpApi` fails when the two differ.

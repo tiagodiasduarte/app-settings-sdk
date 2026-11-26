@@ -4,7 +4,7 @@
     <application>
         <!-- Stand-in for a host app screen in instrumented tests. -->
         <activity
-            android:name="pt.tiagodiasduarte.appsettings.sdk.HostActivity"
+            android:name="pt.tiagodiasduarte.cabitools.sdk.HostActivity"
             android:exported="false"
             android:theme="@android:style/Theme.Material.Light.NoActionBar" />
     </application>

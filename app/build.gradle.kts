@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "pt.tiagodiasduarte.appsettings"
+    namespace = "pt.tiagodiasduarte.cabitools.sample"
     compileSdk {
         version = release(37) {
             minorApiLevel = 1
@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "pt.tiagodiasduarte.appsettings"
+        applicationId = "pt.tiagodiasduarte.cabitools.sample"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

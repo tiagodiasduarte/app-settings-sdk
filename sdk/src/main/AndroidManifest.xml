@@ -3,10 +3,10 @@
 
     <application>
         <activity
-            android:name=".presentation.AppSettingsActivity"
+            android:name=".presentation.CabitoolsActivity"
             android:exported="false"
-            android:label="@string/appsettings_title"
-            android:theme="@style/appsettings_Theme" />
+            android:label="@string/cabitools_title"
+            android:theme="@style/cabitools_Theme" />
     </application>
 
 </manifest>

@@ -1,46 +1,46 @@
 <resources>
-    <string name="appsettings_title">App Settings</string>
+    <string name="cabitools_title">Cabitools</string>
 
-    <string name="appsettings_section_application">Application</string>
-    <string name="appsettings_label_version_name">Version name</string>
-    <string name="appsettings_label_version_code">Version code</string>
-    <string name="appsettings_label_app_id">App id</string>
+    <string name="cabitools_section_application">Application</string>
+    <string name="cabitools_label_version_name">Version name</string>
+    <string name="cabitools_label_version_code">Version code</string>
+    <string name="cabitools_label_app_id">App id</string>
 
-    <string name="appsettings_section_device">Device</string>
-    <string name="appsettings_label_model">Model</string>
-    <string name="appsettings_label_android_version">Android version</string>
+    <string name="cabitools_section_device">Device</string>
+    <string name="cabitools_label_model">Model</string>
+    <string name="cabitools_label_android_version">Android version</string>
 
-    <string name="appsettings_section_logs">Logs</string>
-    <string name="appsettings_label_open_logs">Open Logs</string>
-    <string name="appsettings_logs_title">HTTP logs</string>
-    <string name="appsettings_logs_empty">No HTTP calls recorded yet</string>
-    <string name="appsettings_logs_clear">Clear logs</string>
-    <string name="appsettings_logs_error">Error</string>
-    <string name="appsettings_back">Back</string>
+    <string name="cabitools_section_logs">Logs</string>
+    <string name="cabitools_label_open_logs">Open Logs</string>
+    <string name="cabitools_logs_title">HTTP logs</string>
+    <string name="cabitools_logs_empty">No HTTP calls recorded yet</string>
+    <string name="cabitools_logs_clear">Clear logs</string>
+    <string name="cabitools_logs_error">Error</string>
+    <string name="cabitools_back">Back</string>
 
-    <string name="appsettings_detail_tab_overview">Overview</string>
-    <string name="appsettings_detail_tab_request">Request</string>
-    <string name="appsettings_detail_tab_response">Response</string>
-    <string name="appsettings_detail_url">URL</string>
-    <string name="appsettings_detail_method">Method</string>
-    <string name="appsettings_detail_status">Status</string>
-    <string name="appsettings_detail_started">Started</string>
-    <string name="appsettings_detail_duration">Duration</string>
-    <string name="appsettings_detail_protocol">Protocol</string>
-    <string name="appsettings_detail_request_size">Request size</string>
-    <string name="appsettings_detail_response_size">Response size</string>
-    <string name="appsettings_detail_error">Error</string>
-    <string name="appsettings_detail_headers">Headers</string>
-    <string name="appsettings_detail_body">Body</string>
-    <string name="appsettings_detail_no_headers">No headers</string>
-    <string name="appsettings_detail_body_empty">No body</string>
-    <string name="appsettings_detail_body_truncated">Body truncated: only the first part was stored.</string>
-    <string name="appsettings_detail_body_binary">Binary body (%1$s) not shown</string>
-    <string name="appsettings_detail_body_not_captured">Body (%1$s) was not captured</string>
-    <string name="appsettings_detail_body_not_read">Body was not captured: the app closed it before reading it</string>
-    <string name="appsettings_detail_copy_body">Copy body</string>
-    <string name="appsettings_detail_share">Share log</string>
-    <string name="appsettings_detail_not_found">This log is no longer available.</string>
+    <string name="cabitools_detail_tab_overview">Overview</string>
+    <string name="cabitools_detail_tab_request">Request</string>
+    <string name="cabitools_detail_tab_response">Response</string>
+    <string name="cabitools_detail_url">URL</string>
+    <string name="cabitools_detail_method">Method</string>
+    <string name="cabitools_detail_status">Status</string>
+    <string name="cabitools_detail_started">Started</string>
+    <string name="cabitools_detail_duration">Duration</string>
+    <string name="cabitools_detail_protocol">Protocol</string>
+    <string name="cabitools_detail_request_size">Request size</string>
+    <string name="cabitools_detail_response_size">Response size</string>
+    <string name="cabitools_detail_error">Error</string>
+    <string name="cabitools_detail_headers">Headers</string>
+    <string name="cabitools_detail_body">Body</string>
+    <string name="cabitools_detail_no_headers">No headers</string>
+    <string name="cabitools_detail_body_empty">No body</string>
+    <string name="cabitools_detail_body_truncated">Body truncated: only the first part was stored.</string>
+    <string name="cabitools_detail_body_binary">Binary body (%1$s) not shown</string>
+    <string name="cabitools_detail_body_not_captured">Body (%1$s) was not captured</string>
+    <string name="cabitools_detail_body_not_read">Body was not captured: the app closed it before reading it</string>
+    <string name="cabitools_detail_copy_body">Copy body</string>
+    <string name="cabitools_detail_share">Share log</string>
+    <string name="cabitools_detail_not_found">This log is no longer available.</string>
 
-    <string name="appsettings_value_unknown">Unknown</string>
+    <string name="cabitools_value_unknown">Unknown</string>
 </resources>

@@ -6,13 +6,13 @@ plugins {
 // Production stand-in for :sdk. Same public API (same package and declarations), no behavior:
 // no recording, no database, no screens. Host apps use it in production builds only.
 android {
-    namespace = "pt.tiagodiasduarte.appsettings.sdk.noop"
+    namespace = "pt.tiagodiasduarte.cabitools.sdk.noop"
     compileSdk {
         version = release(37) {
             minorApiLevel = 1
         }
     }
-    resourcePrefix = "appsettings_"
+    resourcePrefix = "cabitools_"
 
     defaultConfig {
         minSdk = 24

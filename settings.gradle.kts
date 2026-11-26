@@ -22,7 +22,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "App Settings Sdk"
+rootProject.name = "cabitools-sdk"
 include(":app")
 include(":sdk")
 include(":sdk-no-op")

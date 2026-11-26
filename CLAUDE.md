@@ -6,9 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Three modules:
 
-- `:sdk` (`com.android.library`, namespace `pt.tiagodiasduarte.appsettings.sdk`) is the App Settings SDK, an in-app tools screen for my own apps. Its only public API is `AppSettings.open(context)` (`explicitApi()` is on), which launches the internal, non-exported `AppSettingsActivity`. It uses clean-architecture packages (`domain` is pure Kotlin, `data` reads PackageManager/`Build`, `presentation` holds the Compose UI and ViewModel) and manual DI in `di/SdkContainer` (no Hilt, so host apps aren't forced to adopt it). The screen renders an ordered list of sections, currently Application and Device. SDK resources must use the `appsettings_` prefix (`resourcePrefix`). See `sdk/README.md`.
-- `:sdk-no-op` (namespace `pt.tiagodiasduarte.appsettings.sdk.noop`) has the same public API as `:sdk` (same package and declarations) and does nothing. Host apps use it in production builds. Any public API change must be made in both modules; `./gradlew checkNoOpApi` fails when they differ.
-- `:app` (namespace `pt.tiagodiasduarte.appsettings`) is a sample host: a Compose `MainActivity` with a button that calls `AppSettings.open`.
+- `:sdk` (`com.android.library`, namespace `pt.tiagodiasduarte.cabitools.sdk`) is Cabitools (named after *cabidela*), an in-app debug and QA tools screen for my own apps. Its public API is the `Cabitools` object (`explicitApi()` is on): `Cabitools.open(context)` launches the internal, non-exported `CabitoolsActivity`, and `Cabitools.httpInterceptor(context) { ... }` returns the HTTP logs OkHttp interceptor, configured with `HttpLogsConfig`/`Retention`. It uses clean-architecture packages (`domain` is pure Kotlin, `data` reads PackageManager/`Build`, `presentation` holds the Compose UI and ViewModel) and manual DI in `di/SdkContainer` (no Hilt, so host apps aren't forced to adopt it). The screen renders an ordered list of sections, currently Application, Device and Logs; Logs opens the HTTP logs screens (Navigation 3), backed by a Room database. SDK resources must use the `cabitools_` prefix (`resourcePrefix`). See `sdk/README.md`.
+- `:sdk-no-op` (namespace `pt.tiagodiasduarte.cabitools.sdk.noop`) has the same public API as `:sdk` (same package and declarations) and does nothing. Host apps use it in production builds. Any public API change must be made in both modules; `./gradlew checkNoOpApi` fails when they differ.
+- `:app` (namespace and application id `pt.tiagodiasduarte.cabitools.sample`, "Cabitools Sample") is a sample host: a Compose `MainActivity` that opens Cabitools and makes HTTP calls through the interceptor. Debug and the minified `qa` build type use `:sdk`; release uses `:sdk-no-op`.
 
 ## Commands
 
@@ -23,14 +23,14 @@ Three modules:
 ./gradlew checkNoOpApi                  # :sdk and :sdk-no-op must expose the same public API
 
 # single test class / method
-./gradlew :sdk:testDebugUnitTest --tests "pt.tiagodiasduarte.appsettings.sdk.presentation.SettingsViewModelTest"
-./gradlew :sdk:testDebugUnitTest --tests "pt.tiagodiasduarte.appsettings.sdk.domain.usecase.GetDeviceInfoUseCaseTest"
-./gradlew :sdk:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=pt.tiagodiasduarte.appsettings.sdk.AppSettingsTest
+./gradlew :sdk:testDebugUnitTest --tests "pt.tiagodiasduarte.cabitools.sdk.presentation.SettingsViewModelTest"
+./gradlew :sdk:testDebugUnitTest --tests "pt.tiagodiasduarte.cabitools.sdk.domain.usecase.GetDeviceInfoUseCaseTest"
+./gradlew :sdk:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=pt.tiagodiasduarte.cabitools.sdk.CabitoolsTest
 ```
 
 CI (`.github/workflows/ci.yml`) runs on PRs into `develop` and `main`: build, unit tests with the coverage check, lint, detekt and `checkNoOpApi`. The `🏁 Finish` job aggregates the result.
 
-Framework-dependent SDK code (`AppSettings.open`, PackageManager/`Build` access, the Compose screen) is unit tested with Robolectric so Kover can measure it; Kover excludes the Activity, `di` and `theme` packages and `@Composable`/`@Preview` functions.
+Framework-dependent SDK code (`Cabitools.open`, PackageManager/`Build` access, the Compose screen) is unit tested with Robolectric so Kover can measure it; Kover excludes the Activity, `di` and `theme` packages and `@Composable`/`@Preview` functions.
 
 ## Build setup
 
@@ -40,7 +40,7 @@ Framework-dependent SDK code (`AppSettings.open`, PackageManager/`Build` access,
 - Configuration cache is enabled (`gradle.properties`), so build logic must be configuration-cache compatible.
 - `settings.gradle.kts` uses `FAIL_ON_PROJECT_REPOS`: add repositories there, not in module build files.
 - R8 keep rules go in `<module>/src/main/keepRules/` (AGP merges every file in that directory), not in a `proguard-rules.pro`. Release optimization is currently disabled (`optimization { enable = false }`).
-- UI is Jetpack Compose with Material 3 (Compose BOM). There's no AppCompat or Material Components: the XML themes are platform `android:Theme.Material.*.NoActionBar` window themes only. The SDK's `AppSettingsTheme` follows the system dark mode and uses dynamic color on API 31+.
+- UI is Jetpack Compose with Material 3 (Compose BOM). There's no AppCompat or Material Components: the XML themes are platform `android:Theme.Material.*.NoActionBar` window themes only. The SDK's `CabitoolsTheme` follows the system dark mode and uses dynamic color on API 31+.
 
 ## Local skills
 

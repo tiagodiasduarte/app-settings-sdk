@@ -1,3 +1,3 @@
 <resources>
-    <style name="Theme.AppSettingsSdk" parent="android:Theme.Material.NoActionBar" />
+    <style name="Theme.CabitoolsSample" parent="android:Theme.Material.NoActionBar" />
 </resources>

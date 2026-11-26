@@ -11,13 +11,13 @@ plugins {
 }
 
 android {
-    namespace = "pt.tiagodiasduarte.appsettings.sdk"
+    namespace = "pt.tiagodiasduarte.cabitools.sdk"
     compileSdk {
         version = release(37) {
             minorApiLevel = 1
         }
     }
-    resourcePrefix = "appsettings_"
+    resourcePrefix = "cabitools_"
 
     defaultConfig {
         minSdk = 24
@@ -69,12 +69,12 @@ kover {
                     "*ComposableSingletons*",
                     "*_Impl",
                     "*_Impl$*",
-                    "pt.tiagodiasduarte.appsettings.sdk.BuildConfig",
+                    "pt.tiagodiasduarte.cabitools.sdk.BuildConfig",
 
                     // Activity, DI and theme
-                    "pt.tiagodiasduarte.appsettings.sdk.presentation.AppSettingsActivity*",
-                    "pt.tiagodiasduarte.appsettings.sdk.di.*",
-                    "pt.tiagodiasduarte.appsettings.sdk.presentation.theme.*",
+                    "pt.tiagodiasduarte.cabitools.sdk.presentation.CabitoolsActivity*",
+                    "pt.tiagodiasduarte.cabitools.sdk.di.*",
+                    "pt.tiagodiasduarte.cabitools.sdk.presentation.theme.*",
                 )
             }
         }

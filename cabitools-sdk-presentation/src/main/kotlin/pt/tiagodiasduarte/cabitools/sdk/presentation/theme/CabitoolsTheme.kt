@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 
 /** SDK-owned theme: independent of the host app's theme. */
 @Composable
-internal fun CabitoolsTheme(
+public fun CabitoolsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit,

@@ -15,7 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-import pt.tiagodiasduarte.cabitools.sdk.R
+import pt.tiagodiasduarte.cabitools.sdk.presentation.R
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabitoolsRoute
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.InfoRowUi
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.NavigationRowUi

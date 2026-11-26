@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name=".presentation.CabitoolsActivity"
+            android:name=".CabitoolsActivity"
             android:exported="false"
             android:label="@string/cabitools_title"
             android:theme="@style/cabitools_Theme" />

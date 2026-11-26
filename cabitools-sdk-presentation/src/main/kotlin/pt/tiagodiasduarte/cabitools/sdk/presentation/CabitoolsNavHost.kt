@@ -14,7 +14,7 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import pt.tiagodiasduarte.cabitools.sdk.R
+import pt.tiagodiasduarte.cabitools.sdk.presentation.R
 import pt.tiagodiasduarte.cabitools.sdk.presentation.logs.LogDetailScreen
 import pt.tiagodiasduarte.cabitools.sdk.presentation.logs.LogDetailViewModel
 import pt.tiagodiasduarte.cabitools.sdk.presentation.logs.LogsScreen
@@ -28,7 +28,7 @@ import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabitoolsRoute
  * Back pops the stack. On Settings, the system's default back closes the Activity.
  */
 @Composable
-internal fun CabitoolsNavHost(dependencies: PresentationDependencies) {
+public fun CabitoolsNavHost(dependencies: PresentationDependencies) {
     val backStack = rememberSaveable(saver = backStackSaver) {
         mutableStateListOf<CabitoolsRoute>(CabitoolsRoute.Settings)
     }

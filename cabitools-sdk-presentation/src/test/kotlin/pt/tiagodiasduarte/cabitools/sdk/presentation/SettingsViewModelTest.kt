@@ -12,7 +12,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import pt.tiagodiasduarte.cabitools.sdk.R
+import pt.tiagodiasduarte.cabitools.sdk.presentation.R
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.AppInfo
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.DeviceInfo
 import pt.tiagodiasduarte.cabitools.sdk.domain.repository.AppInfoRepository

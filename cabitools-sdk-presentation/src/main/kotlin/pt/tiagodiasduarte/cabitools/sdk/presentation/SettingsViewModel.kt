@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import pt.tiagodiasduarte.cabitools.sdk.R
+import pt.tiagodiasduarte.cabitools.sdk.presentation.R
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.AppInfo
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.DeviceDetails
 import pt.tiagodiasduarte.cabitools.sdk.domain.usecase.GetAppInfoUseCase

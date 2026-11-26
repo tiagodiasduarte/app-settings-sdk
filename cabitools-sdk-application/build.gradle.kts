@@ -66,7 +66,7 @@ kover {
                     "pt.tiagodiasduarte.cabitools.sdk.BuildConfig",
 
                     // Activity, DI and theme
-                    "pt.tiagodiasduarte.cabitools.sdk.presentation.CabitoolsActivity*",
+                    "pt.tiagodiasduarte.cabitools.sdk.CabitoolsActivity*",
                     "pt.tiagodiasduarte.cabitools.sdk.di.*",
                     "pt.tiagodiasduarte.cabitools.sdk.presentation.theme.*",
                 )
@@ -96,26 +96,14 @@ dependencies {
     implementation(project(":cabitools-sdk-domain"))
     implementation(project(":cabitools-sdk-infrastructure"))
     implementation(project(":cabitools-sdk-presentation"))
+    // CabitoolsActivity sets the Compose content.
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
-    implementation(libs.androidx.navigation3.runtime)
-    implementation(libs.androidx.navigation3.ui)
 
     // Host apps bring their own OkHttp through Retrofit; the SDK never picks its version.
     compileOnly(libs.okhttp)
 
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-
-    testImplementation(platform(libs.androidx.compose.bom))
-    testImplementation(libs.androidx.compose.ui.test.junit4)
     testImplementation(libs.androidx.junit)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

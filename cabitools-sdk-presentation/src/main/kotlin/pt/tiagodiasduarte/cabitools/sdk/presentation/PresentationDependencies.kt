@@ -5,8 +5,8 @@ import pt.tiagodiasduarte.cabitools.sdk.domain.usecase.GetAppInfoUseCase
 import pt.tiagodiasduarte.cabitools.sdk.domain.usecase.GetDeviceInfoUseCase
 
 /** What the Cabitools screens need. Provided by the module that assembles the SDK. */
-internal interface PresentationDependencies {
-    val getAppInfo: GetAppInfoUseCase
-    val getDeviceInfo: GetDeviceInfoUseCase
-    val httpLogsRepository: HttpLogsRepository
+public interface PresentationDependencies {
+    public val getAppInfo: GetAppInfoUseCase
+    public val getDeviceInfo: GetDeviceInfoUseCase
+    public val httpLogsRepository: HttpLogsRepository
 }

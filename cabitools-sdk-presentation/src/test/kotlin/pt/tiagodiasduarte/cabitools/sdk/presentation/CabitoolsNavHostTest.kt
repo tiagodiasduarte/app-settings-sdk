@@ -14,7 +14,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-import pt.tiagodiasduarte.cabitools.sdk.di.SdkContainer
 import pt.tiagodiasduarte.cabitools.sdk.presentation.model.CabitoolsRoute
 import pt.tiagodiasduarte.cabitools.sdk.presentation.theme.CabitoolsTheme
 
@@ -28,7 +27,7 @@ class CabitoolsNavHostTest {
     private fun showNavHost() {
         composeRule.setContent {
             CabitoolsTheme(dynamicColor = false) {
-                CabitoolsNavHost(SdkContainer(composeRule.activity))
+                CabitoolsNavHost(FakePresentationDependencies())
             }
         }
         composeRule.waitUntil(TIMEOUT_MS) {

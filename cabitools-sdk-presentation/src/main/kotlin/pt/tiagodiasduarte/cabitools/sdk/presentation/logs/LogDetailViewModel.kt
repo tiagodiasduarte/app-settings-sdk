@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import pt.tiagodiasduarte.cabitools.sdk.R
+import pt.tiagodiasduarte.cabitools.sdk.presentation.R
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.ContentTypes
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpHeader
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpLogDetail

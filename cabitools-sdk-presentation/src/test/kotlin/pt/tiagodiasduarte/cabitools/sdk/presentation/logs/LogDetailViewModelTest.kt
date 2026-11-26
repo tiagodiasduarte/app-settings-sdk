@@ -13,7 +13,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import pt.tiagodiasduarte.cabitools.sdk.R
+import pt.tiagodiasduarte.cabitools.sdk.presentation.R
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpHeader
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpLogDetail
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpMessage

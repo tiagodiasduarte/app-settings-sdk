@@ -17,7 +17,7 @@
 ## 4. Presentation
 
 - [x] 4.1 Add `PresentationDependencies`, make `CabitoolsNavHost` and the ViewModel factories take dependencies instead of `SdkContainer`, and implement the interface in `SdkContainer`. Verify that `:cabitools-sdk-application:testDebugUnitTest` passes
-- [ ] 4.2 Move `presentation/*` (except `CabitoolsActivity`), resources and tests to `:cabitools-sdk-presentation` with Compose and Navigation 3, using its `R` class and fake `PresentationDependencies` in tests; move `CabitoolsActivity` into the application module's root package. Verify that `:cabitools-sdk-presentation:testDebugUnitTest` passes and the merged manifest of `:app` declares `CabitoolsActivity` with `exported=false`
+- [x] 4.2 Move `presentation/*` (except `CabitoolsActivity`), resources and tests to `:cabitools-sdk-presentation` with Compose and Navigation 3, using its `R` class and fake `PresentationDependencies` in tests; move `CabitoolsActivity` into the application module's root package. Verify that `:cabitools-sdk-presentation:testDebugUnitTest` passes and the merged manifest of `:app` declares `CabitoolsActivity` with `exported=false`
 
 ## 5. Application module, docs and checks
 

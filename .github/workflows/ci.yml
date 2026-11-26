@@ -65,6 +65,14 @@ jobs:
         with:
           name: detekt-html-reports
           path: '*/build/reports/detekt/detekt.html'
+      - name: Check :sdk and :sdk-no-op public APIs match
+        run: ./gradlew checkNoOpApi --stacktrace
+      - name: Upload public API dumps
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: no-op-api-dumps
+          path: build/reports/noOpApi/
 
   finish:
     name: 🏁 Finish

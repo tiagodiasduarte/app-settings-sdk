@@ -4,9 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-Two modules:
+Three modules:
 
 - `:sdk` (`com.android.library`, namespace `pt.tiagodiasduarte.appsettings.sdk`) is the App Settings SDK, an in-app tools screen for my own apps. Its only public API is `AppSettings.open(context)` (`explicitApi()` is on), which launches the internal, non-exported `AppSettingsActivity`. It uses clean-architecture packages (`domain` is pure Kotlin, `data` reads PackageManager/`Build`, `presentation` holds the Compose UI and ViewModel) and manual DI in `di/SdkContainer` (no Hilt, so host apps aren't forced to adopt it). The screen renders an ordered list of sections, currently Application and Device. SDK resources must use the `appsettings_` prefix (`resourcePrefix`). See `sdk/README.md`.
+- `:sdk-no-op` (namespace `pt.tiagodiasduarte.appsettings.sdk.noop`) has the same public API as `:sdk` (same package and declarations) and does nothing. Host apps use it in production builds. Any public API change must be made in both modules; `./gradlew checkNoOpApi` fails when they differ.
 - `:app` (namespace `pt.tiagodiasduarte.appsettings`) is a sample host: a Compose `MainActivity` with a button that calls `AppSettings.open`.
 
 ## Commands
@@ -19,6 +20,7 @@ Two modules:
 ./gradlew lint                          # Android lint
 ./gradlew detekt                        # static analysis (config/detekt/detekt.yml)
 ./gradlew :sdk:koverHtmlReport :sdk:koverVerify   # SDK coverage report and the 90% line/branch minimum
+./gradlew checkNoOpApi                  # :sdk and :sdk-no-op must expose the same public API
 
 # single test class / method
 ./gradlew :sdk:testDebugUnitTest --tests "pt.tiagodiasduarte.appsettings.sdk.presentation.SettingsViewModelTest"
@@ -26,7 +28,7 @@ Two modules:
 ./gradlew :sdk:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=pt.tiagodiasduarte.appsettings.sdk.AppSettingsTest
 ```
 
-CI (`.github/workflows/ci.yml`) runs on PRs into `develop` and `main`: build, unit tests with the coverage check, lint and detekt. The `🏁 Finish` job aggregates the result.
+CI (`.github/workflows/ci.yml`) runs on PRs into `develop` and `main`: build, unit tests with the coverage check, lint, detekt and `checkNoOpApi`. The `🏁 Finish` job aggregates the result.
 
 Framework-dependent SDK code (`AppSettings.open`, PackageManager/`Build` access, the Compose screen) is unit tested with Robolectric so Kover can measure it; Kover excludes the Activity, `di` and `theme` packages and `@Composable`/`@Preview` functions.
 

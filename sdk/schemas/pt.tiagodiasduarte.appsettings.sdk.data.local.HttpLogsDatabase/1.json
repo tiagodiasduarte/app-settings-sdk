@@ -1,0 +1,171 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "985cc186833ff6a293d68638f9d667f6",
+    "entities": [
+      {
+        "tableName": "http_logs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `method` TEXT NOT NULL, `url` TEXT NOT NULL, `requestedAt` INTEGER NOT NULL, `durationMs` INTEGER NOT NULL, `protocol` TEXT, `responseCode` INTEGER, `responseMessage` TEXT, `error` TEXT, `requestHeaders` TEXT NOT NULL, `requestContentType` TEXT, `requestBodySize` INTEGER, `requestBodyTruncated` INTEGER NOT NULL, `responseHeaders` TEXT NOT NULL, `responseContentType` TEXT, `responseBodySize` INTEGER, `responseBodyTruncated` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "method",
+            "columnName": "method",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "requestedAt",
+            "columnName": "requestedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "durationMs",
+            "columnName": "durationMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "protocol",
+            "columnName": "protocol",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "responseCode",
+            "columnName": "responseCode",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "responseMessage",
+            "columnName": "responseMessage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "error",
+            "columnName": "error",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "requestHeaders",
+            "columnName": "requestHeaders",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "requestContentType",
+            "columnName": "requestContentType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "requestBodySize",
+            "columnName": "requestBodySize",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "requestBodyTruncated",
+            "columnName": "requestBodyTruncated",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "responseHeaders",
+            "columnName": "responseHeaders",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "responseContentType",
+            "columnName": "responseContentType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "responseBodySize",
+            "columnName": "responseBodySize",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "responseBodyTruncated",
+            "columnName": "responseBodyTruncated",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_http_logs_requestedAt",
+            "unique": false,
+            "columnNames": [
+              "requestedAt"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_http_logs_requestedAt` ON `${TABLE_NAME}` (`requestedAt`)"
+          }
+        ]
+      },
+      {
+        "tableName": "http_log_bodies",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`logId` INTEGER NOT NULL, `requestBody` TEXT, `responseBody` TEXT, PRIMARY KEY(`logId`), FOREIGN KEY(`logId`) REFERENCES `http_logs`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "logId",
+            "columnName": "logId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "requestBody",
+            "columnName": "requestBody",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "responseBody",
+            "columnName": "responseBody",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "logId"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "http_logs",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "logId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '985cc186833ff6a293d68638f9d667f6')"
+    ]
+  }
+}

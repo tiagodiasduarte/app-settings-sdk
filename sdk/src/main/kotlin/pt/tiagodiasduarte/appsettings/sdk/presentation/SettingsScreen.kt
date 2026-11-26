@@ -1,11 +1,13 @@
 package pt.tiagodiasduarte.appsettings.sdk.presentation
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -14,13 +16,16 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pt.tiagodiasduarte.appsettings.sdk.R
+import pt.tiagodiasduarte.appsettings.sdk.presentation.model.AppSettingsRoute
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.InfoRowUi
+import pt.tiagodiasduarte.appsettings.sdk.presentation.model.NavigationRowUi
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.SectionUi
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.SettingsUiState
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.UiText
@@ -33,6 +38,7 @@ internal const val SETTINGS_LIST_TAG = "appsettings_list"
 internal fun SettingsScreen(
     uiState: SettingsUiState,
     modifier: Modifier = Modifier,
+    onNavigate: (AppSettingsRoute) -> Unit = {},
 ) {
     Scaffold(
         modifier = modifier,
@@ -47,7 +53,12 @@ internal fun SettingsScreen(
                     item(key = "divider_$index") { HorizontalDivider(Modifier.padding(vertical = 8.dp)) }
                 }
                 item(key = "title_$index") { SectionTitle(section) }
-                itemsIndexed(section.rows, key = { rowIndex, _ -> "row_${index}_$rowIndex" }) { _, row -> InfoRow(row) }
+                itemsIndexed(section.rows, key = { rowIndex, _ -> "row_${index}_$rowIndex" }) { _, row ->
+                    when (row) {
+                        is InfoRowUi -> InfoRow(row)
+                        is NavigationRowUi -> NavigationRow(row, onNavigate)
+                    }
+                }
             }
         }
     }
@@ -74,6 +85,15 @@ private fun InfoRow(row: InfoRowUi) {
 }
 
 @Composable
+private fun NavigationRow(row: NavigationRowUi, onNavigate: (AppSettingsRoute) -> Unit) {
+    ListItem(
+        headlineContent = { Text(stringResource(row.labelRes)) },
+        trailingContent = { Icon(painterResource(R.drawable.appsettings_ic_chevron_right), contentDescription = null) },
+        modifier = Modifier.clickable { onNavigate(row.destination) },
+    )
+}
+
+@Composable
 private fun UiText.asString(): String = when (this) {
     is UiText.Plain -> value
     is UiText.Resource -> stringResource(resId)
@@ -95,6 +115,10 @@ private val previewState = SettingsUiState(
                 InfoRowUi(R.string.appsettings_label_model, UiText.Plain("Google Pixel 8")),
                 InfoRowUi(R.string.appsettings_label_android_version, UiText.Plain("15 (API 35)")),
             ),
+        ),
+        SectionUi(
+            R.string.appsettings_section_logs,
+            listOf(NavigationRowUi(R.string.appsettings_label_open_logs, AppSettingsRoute.Logs)),
         ),
     ),
 )

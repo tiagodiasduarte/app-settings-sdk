@@ -19,7 +19,9 @@ import pt.tiagodiasduarte.appsettings.sdk.domain.repository.AppInfoRepository
 import pt.tiagodiasduarte.appsettings.sdk.domain.repository.DeviceInfoRepository
 import pt.tiagodiasduarte.appsettings.sdk.domain.usecase.GetAppInfoUseCase
 import pt.tiagodiasduarte.appsettings.sdk.domain.usecase.GetDeviceInfoUseCase
+import pt.tiagodiasduarte.appsettings.sdk.presentation.model.AppSettingsRoute
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.InfoRowUi
+import pt.tiagodiasduarte.appsettings.sdk.presentation.model.NavigationRowUi
 import pt.tiagodiasduarte.appsettings.sdk.presentation.model.UiText
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -59,7 +61,7 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun `given app and device info when loading finishes then sections are Application then Device`() =
+    fun `given app and device info when loading finishes then sections are Application, Device then Logs`() =
         runTest(dispatcher) {
             // Given
             val app = AppInfo("com.example.host", "2.3.0", 230L)
@@ -69,8 +71,28 @@ class SettingsViewModelTest {
 
             // Then
             assertEquals(
-                listOf(R.string.appsettings_section_application, R.string.appsettings_section_device),
+                listOf(
+                    R.string.appsettings_section_application,
+                    R.string.appsettings_section_device,
+                    R.string.appsettings_section_logs,
+                ),
                 vm.uiState.value.sections.map { it.titleRes },
+            )
+        }
+
+    @Test
+    fun `given loading finishes when the logs section is read then it has an Open Logs row to the logs screen`() =
+        runTest(dispatcher) {
+            // Given
+            val app = AppInfo("com.example.host", "2.3.0", 230L)
+
+            // When
+            val vm = viewModel(app = app).also { advanceUntilIdle() }
+
+            // Then
+            assertEquals(
+                listOf(NavigationRowUi(R.string.appsettings_label_open_logs, AppSettingsRoute.Logs)),
+                vm.uiState.value.sections[2].rows,
             )
         }
 
@@ -106,7 +128,7 @@ class SettingsViewModelTest {
             // Then
             assertEquals(
                 UiText.Resource(R.string.appsettings_value_unknown),
-                vm.uiState.value.sections[0].rows[0].value,
+                (vm.uiState.value.sections[0].rows[0] as InfoRowUi).value,
             )
         }
 
@@ -120,7 +142,7 @@ class SettingsViewModelTest {
             val vm = viewModel(app = app).also { advanceUntilIdle() }
 
             // Then
-            assertEquals(UiText.Plain("3000000000"), vm.uiState.value.sections[0].rows[1].value)
+            assertEquals(UiText.Plain("3000000000"), (vm.uiState.value.sections[0].rows[1] as InfoRowUi).value)
         }
 
     @Test

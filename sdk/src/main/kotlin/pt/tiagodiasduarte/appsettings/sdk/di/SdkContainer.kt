@@ -3,8 +3,11 @@ package pt.tiagodiasduarte.appsettings.sdk.di
 import android.content.Context
 import pt.tiagodiasduarte.appsettings.sdk.data.AppInfoRepositoryImpl
 import pt.tiagodiasduarte.appsettings.sdk.data.DeviceInfoRepositoryImpl
+import pt.tiagodiasduarte.appsettings.sdk.data.HttpLogsRepositoryImpl
+import pt.tiagodiasduarte.appsettings.sdk.data.local.HttpLogsStore
 import pt.tiagodiasduarte.appsettings.sdk.domain.repository.AppInfoRepository
 import pt.tiagodiasduarte.appsettings.sdk.domain.repository.DeviceInfoRepository
+import pt.tiagodiasduarte.appsettings.sdk.domain.repository.HttpLogsRepository
 import pt.tiagodiasduarte.appsettings.sdk.domain.usecase.GetAppInfoUseCase
 import pt.tiagodiasduarte.appsettings.sdk.domain.usecase.GetDeviceInfoUseCase
 
@@ -18,4 +21,6 @@ internal class SdkContainer(context: Context) {
 
     val getAppInfo: GetAppInfoUseCase by lazy { GetAppInfoUseCase(appInfoRepository) }
     val getDeviceInfo: GetDeviceInfoUseCase by lazy { GetDeviceInfoUseCase(deviceInfoRepository) }
+
+    val httpLogsRepository: HttpLogsRepository by lazy { HttpLogsRepositoryImpl(HttpLogsStore.get(appContext)) }
 }

@@ -4,6 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import okhttp3.Interceptor
+import pt.tiagodiasduarte.appsettings.sdk.data.http.HeaderRules
+import pt.tiagodiasduarte.appsettings.sdk.data.http.HttpLogsInterceptor
+import pt.tiagodiasduarte.appsettings.sdk.data.local.HttpLogsStore
 import pt.tiagodiasduarte.appsettings.sdk.presentation.AppSettingsActivity
 
 /**
@@ -29,6 +33,26 @@ public object AppSettings {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         context.startActivity(intent)
+    }
+
+    /**
+     * Creates the HTTP logs interceptor. Add it to the OkHttp client your Retrofit instance uses:
+     *
+     * ```
+     * OkHttpClient.Builder()
+     *     .addInterceptor(AppSettings.httpInterceptor(context) { retention = Retention.ONE_DAY })
+     * ```
+     *
+     * Every call through that client is recorded and shown in the App Settings screen.
+     * Use `:sdk-no-op` in production builds: its interceptor records nothing.
+     */
+    @JvmStatic
+    public fun httpInterceptor(context: Context, configure: HttpLogsConfig.() -> Unit = {}): Interceptor {
+        val config = HttpLogsConfig().apply(configure)
+        val store = HttpLogsStore.get(context)
+        // One database per process: the most recently created interceptor's retention applies.
+        store.retention = config.retention
+        return HttpLogsInterceptor(store, HeaderRules.from(config), config.maxContentLength)
     }
 }
 

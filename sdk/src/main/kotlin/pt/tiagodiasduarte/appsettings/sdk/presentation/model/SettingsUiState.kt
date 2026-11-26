@@ -9,13 +9,26 @@ internal data class SettingsUiState(
 /** A titled block on the settings screen. Future tools add sections here. */
 internal data class SectionUi(
     @StringRes val titleRes: Int,
-    val rows: List<InfoRowUi>,
+    val rows: List<RowUi>,
 )
 
+/** One row in a section. */
+internal sealed interface RowUi {
+    @get:StringRes
+    val labelRes: Int
+}
+
+/** A label with its value. */
 internal data class InfoRowUi(
-    @StringRes val labelRes: Int,
+    @StringRes override val labelRes: Int,
     val value: UiText,
-)
+) : RowUi
+
+/** A label that opens another SDK screen when selected. */
+internal data class NavigationRowUi(
+    @StringRes override val labelRes: Int,
+    val destination: AppSettingsRoute,
+) : RowUi
 
 /** Text that is either a literal value or a string resource resolved at render time. */
 internal sealed interface UiText {

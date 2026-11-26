@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kover)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 android {
@@ -51,6 +53,10 @@ detekt {
     config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
 }
 
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
 kover {
     reports {
         filters {
@@ -61,6 +67,8 @@ kover {
                 classes(
                     // Generated code
                     "*ComposableSingletons*",
+                    "*_Impl",
+                    "*_Impl$*",
                     "pt.tiagodiasduarte.appsettings.sdk.BuildConfig",
 
                     // Activity, DI and theme
@@ -99,6 +107,16 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
+
+    // Host apps bring their own OkHttp through Retrofit; the SDK never picks its version.
+    compileOnly(libs.okhttp)
+
+    ksp(libs.androidx.room.compiler)
 
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
@@ -108,6 +126,8 @@ dependencies {
     testImplementation(libs.androidx.junit)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.okhttp)
+    testImplementation(libs.okhttp.mockwebserver)
     testImplementation(libs.robolectric)
 
     androidTestImplementation(platform(libs.androidx.compose.bom))

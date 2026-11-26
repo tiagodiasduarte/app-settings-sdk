@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import pt.tiagodiasduarte.cabitools.sdk.Retention
+import java.util.concurrent.TimeUnit
 import pt.tiagodiasduarte.cabitools.sdk.data.http.HttpLogSink
 
 /**
@@ -26,9 +26,9 @@ internal class HttpLogsStore(
     private val clock: () -> Long = System::currentTimeMillis,
 ) : HttpLogSink {
 
-    /** The retention of the most recently created interceptor. */
+    /** How long logs are kept, in milliseconds: the retention of the most recently created interceptor. */
     @Volatile
-    var retention: Retention = Retention.ONE_DAY
+    var retentionMillis: Long = DEFAULT_RETENTION_MILLIS
 
     /**
      * Saves a finished call in the background, then deletes expired and excess logs. Callers
@@ -61,7 +61,7 @@ internal class HttpLogsStore(
         dao.keepNewest(MAX_LOGS)
     }
 
-    private fun cutoff(): Long = clock() - retention.millis
+    private fun cutoff(): Long = clock() - retentionMillis
 
     private suspend fun safely(action: String, block: suspend () -> Unit) {
         try {
@@ -75,6 +75,7 @@ internal class HttpLogsStore(
 
     companion object {
         const val MAX_LOGS = 500
+        private val DEFAULT_RETENTION_MILLIS = TimeUnit.DAYS.toMillis(1)
         private const val TAG = "CabitoolsHttpLogs"
 
         @Volatile

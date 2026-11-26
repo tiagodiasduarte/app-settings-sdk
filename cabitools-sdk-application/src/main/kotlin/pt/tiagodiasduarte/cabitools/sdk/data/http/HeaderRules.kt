@@ -1,7 +1,6 @@
 package pt.tiagodiasduarte.cabitools.sdk.data.http
 
 import okhttp3.Headers
-import pt.tiagodiasduarte.cabitools.sdk.HttpLogsConfig
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpHeader
 
 /**
@@ -29,8 +28,5 @@ internal class HeaderRules(
     companion object {
         const val REDACTED = "****"
         val DEFAULT_REDACTED = setOf("authorization", "proxy-authorization", "cookie", "set-cookie")
-
-        fun from(config: HttpLogsConfig) =
-            HeaderRules(config.redactDefaultHeaders, config.redactedHeaders, config.hiddenHeaders)
     }
 }

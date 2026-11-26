@@ -25,7 +25,7 @@ class CabitoolsHttpInterceptorTest {
 
         // Then
         assertTrue(interceptor is HttpLogsInterceptor)
-        assertEquals(Retention.ONE_WEEK, HttpLogsStore.get(context).retention)
+        assertEquals(Retention.ONE_WEEK.millis, HttpLogsStore.get(context).retentionMillis)
     }
 
     @Test
@@ -37,6 +37,6 @@ class CabitoolsHttpInterceptorTest {
         Cabitools.httpInterceptor(context) { retention = Retention.ONE_HOUR }
 
         // Then
-        assertEquals(Retention.ONE_HOUR, HttpLogsStore.get(context).retention)
+        assertEquals(Retention.ONE_HOUR.millis, HttpLogsStore.get(context).retentionMillis)
     }
 }

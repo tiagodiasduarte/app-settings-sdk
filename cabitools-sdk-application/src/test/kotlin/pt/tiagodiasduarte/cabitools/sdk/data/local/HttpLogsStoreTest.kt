@@ -16,7 +16,6 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertSame
 import org.junit.Test
 import org.junit.runner.RunWith
-import pt.tiagodiasduarte.cabitools.sdk.Retention
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpHeader
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -52,20 +51,20 @@ class HttpLogsStoreTest {
     @Test
     fun `given each retention period when time passes beyond it then older logs are deleted and hidden`() =
         testScope.runTest {
-            Retention.entries.forEach { retention ->
+            listOf(HOUR, DAY, WEEK).forEach { retentionMillis ->
                 // Given
                 store.clear()
-                store.retention = retention
+                store.retentionMillis = retentionMillis
                 now = WEEK * 2
-                store.saveAsync(log(requestedAt = now - retention.millis - 1, id = 1), null, null).join()
-                store.saveAsync(log(requestedAt = now - retention.millis + 1, id = 2), null, null).join()
+                store.saveAsync(log(requestedAt = now - retentionMillis - 1, id = 1), null, null).join()
+                store.saveAsync(log(requestedAt = now - retentionMillis + 1, id = 2), null, null).join()
 
                 // When
                 val urls = store.observeSummaries().first().map { it.url }
 
                 // Then
-                assertEquals("$retention", listOf("https://api.example.com/2"), urls)
-                assertEquals("$retention", 1, rows("http_logs"))
+                assertEquals("$retentionMillis ms", listOf("https://api.example.com/2"), urls)
+                assertEquals("$retentionMillis ms", 1, rows("http_logs"))
             }
         }
 
@@ -73,7 +72,7 @@ class HttpLogsStoreTest {
     fun `given expired logs and no new calls when the list is opened then the expired logs are deleted`() =
         testScope.runTest {
             // Given
-            store.retention = Retention.ONE_HOUR
+            store.retentionMillis = HOUR
             now = HOUR
             store.saveAsync(log(requestedAt = now), "old", null).join()
             now += 2 * HOUR
@@ -154,6 +153,7 @@ class HttpLogsStoreTest {
 
     private companion object {
         const val HOUR = 60 * 60 * 1000L
-        const val WEEK = 7 * 24 * HOUR
+        const val DAY = 24 * HOUR
+        const val WEEK = 7 * DAY
     }
 }

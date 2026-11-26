@@ -16,7 +16,6 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import pt.tiagodiasduarte.cabitools.sdk.HttpLogsConfig
 import pt.tiagodiasduarte.cabitools.sdk.data.local.HttpLogEntity
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpHeader
 import java.net.SocketTimeoutException
@@ -244,7 +243,7 @@ class HttpLogsInterceptorTest {
     ): OkHttpClient {
         val clock = { 1_000L }
         val nanoTime = { nanos.also { nanos += TimeUnit.MILLISECONDS.toNanos(40) } }
-        val rules = HeaderRules.from(HttpLogsConfig())
+        val rules = HeaderRules(redactDefaultHeaders = true, redactedHeaders = emptySet(), hiddenHeaders = emptySet())
         val interceptor = HttpLogsInterceptor(sink, rules, maxContentLength, clock, nanoTime)
         return OkHttpClient.Builder().addInterceptor(interceptor).apply(configure).build()
     }

@@ -3,7 +3,6 @@ package pt.tiagodiasduarte.cabitools.sdk.data.http
 import okhttp3.Headers
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import pt.tiagodiasduarte.cabitools.sdk.HttpLogsConfig
 import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpHeader
 
 class HeaderRulesTest {
@@ -11,7 +10,7 @@ class HeaderRulesTest {
     @Test
     fun `given the default rules when sensitive headers are captured then their values become stars`() {
         // Given
-        val rules = HeaderRules.from(HttpLogsConfig())
+        val rules = HeaderRules(redactDefaultHeaders = true, redactedHeaders = emptySet(), hiddenHeaders = emptySet())
         val headers = Headers.headersOf(
             "authorization", "Bearer abc123",
             "Proxy-Authorization", "Basic xyz",
@@ -39,7 +38,11 @@ class HeaderRulesTest {
     @Test
     fun `given an extra redacted header in any case when it is captured then its value becomes stars`() {
         // Given
-        val rules = HeaderRules.from(HttpLogsConfig().apply { redactHeaders("x-api-key") })
+        val rules = HeaderRules(
+            redactDefaultHeaders = true,
+            redactedHeaders = setOf("x-api-key"),
+            hiddenHeaders = emptySet(),
+        )
 
         // When
         val captured = rules.apply(Headers.headersOf("X-Api-Key", "secret"))
@@ -51,7 +54,11 @@ class HeaderRulesTest {
     @Test
     fun `given a hidden header when headers are captured then it is not stored at all`() {
         // Given
-        val rules = HeaderRules.from(HttpLogsConfig().apply { hideHeaders("X-Internal-Trace", "Authorization") })
+        val rules = HeaderRules(
+            redactDefaultHeaders = true,
+            redactedHeaders = emptySet(),
+            hiddenHeaders = setOf("X-Internal-Trace", "Authorization"),
+        )
 
         // When
         val captured = rules.apply(
@@ -65,7 +72,7 @@ class HeaderRulesTest {
     @Test
     fun `given default redaction turned off when sensitive headers are captured then their values are kept`() {
         // Given
-        val rules = HeaderRules.from(HttpLogsConfig().apply { redactDefaultHeaders = false })
+        val rules = HeaderRules(redactDefaultHeaders = false, redactedHeaders = emptySet(), hiddenHeaders = emptySet())
 
         // When
         val captured = rules.apply(Headers.headersOf("Authorization", "Bearer abc"))
@@ -77,7 +84,7 @@ class HeaderRulesTest {
     @Test
     fun `given repeated headers when they are captured then each line is kept in order`() {
         // Given
-        val rules = HeaderRules.from(HttpLogsConfig().apply { redactDefaultHeaders = false })
+        val rules = HeaderRules(redactDefaultHeaders = false, redactedHeaders = emptySet(), hiddenHeaders = emptySet())
 
         // When
         val captured = rules.apply(Headers.headersOf("Set-Cookie", "a=1", "Set-Cookie", "b=2"))

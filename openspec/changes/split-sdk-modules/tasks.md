@@ -11,7 +11,7 @@
 
 ## 3. Infrastructure
 
-- [ ] 3.1 Move the `HttpLogsConfig` to `HeaderRules` mapping into the application module and replace `HttpLogsStore.retention: Retention` with `retentionMillis: Long`, updating their tests. Verify that `:cabitools-sdk-application:testDebugUnitTest` passes
+- [x] 3.1 Move the `HttpLogsConfig` to `HeaderRules` mapping into the application module and replace `HttpLogsStore.retention: Retention` with `retentionMillis: Long`, updating their tests. Verify that `:cabitools-sdk-application:testDebugUnitTest` passes
 - [ ] 3.2 Move `data/*` (repositories, `http`, `local`, Room schema) with its unit and instrumented tests to `:cabitools-sdk-infrastructure` in the `…sdk.infrastructure` packages, with Room/KSP there, and make the declarations listed in design.md `public`. Verify that `:cabitools-sdk-infrastructure:testDebugUnitTest` passes and the Room schema is exported from the new module
 
 ## 4. Presentation

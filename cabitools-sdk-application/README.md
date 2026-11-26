@@ -10,16 +10,17 @@ An in-app tools screen for my own apps. It shows these sections, in this order:
 
 ## Integration
 
-Use `:sdk` in debug and QA builds, and `:sdk-no-op` in production builds. `:sdk-no-op` has the
+Use `:cabitools-sdk-application` in debug and QA builds, and `:cabitools-sdk-application-no-op`
+in production builds. The no-op has the
 same public API and does nothing, so your code compiles unchanged in every build, and production
 never records traffic or ships the screen:
 
 ```kotlin
 dependencies {
     // The SDK in debug and QA builds; the no-op, with the same API, in production.
-    debugImplementation(project(":sdk"))
-    "qaImplementation"(project(":sdk"))
-    releaseImplementation(project(":sdk-no-op"))
+    debugImplementation(project(":cabitools-sdk-application"))
+    "qaImplementation"(project(":cabitools-sdk-application"))
+    releaseImplementation(project(":cabitools-sdk-application-no-op"))
 }
 ```
 
@@ -81,7 +82,7 @@ What to know:
   compressed (its own `Accept-Encoding`) are not stored as text.
 - Logs are stored on the device, in the SDK database `cabitools_http_logs.db`. Anything you
   don't redact or hide (request and response bodies included) is readable on that device and
-  in shared logs. Keep `:sdk` out of production builds.
+  in shared logs. Keep `:cabitools-sdk-application` out of production builds.
 - One database serves the whole process. If you create several interceptors with different
   options, the retention of the most recently created one applies.
 - OkHttp is a `compileOnly` dependency: the SDK uses your app's OkHttp version (4.12 or later).
@@ -93,17 +94,24 @@ What to know:
 
 ## Architecture
 
+One Gradle module per layer. The build enforces the arrows: domain is pure Kotlin, and
+presentation and infrastructure can't see each other.
+
 ```
-presentation  CabitoolsActivity (Navigation 3 host), Settings, Logs and LogDetail screens and ViewModels
-     |
-     v
-domain        AppInfo, DeviceInfo, HttpLog models, use cases, repository interfaces (pure Kotlin)
-     ^
-     |
-data          PackageManager / android.os.Build repositories, HTTP logs interceptor and Room store
-di            SdkContainer (manual wiring)
+ host app ──> cabitools-sdk-application   public API (Cabitools, HttpLogsConfig, Retention),
+                 |          |               SdkContainer (manual DI), CabitoolsActivity
+                 v          v
+     cabitools-sdk-       cabitools-sdk-
+      presentation         infrastructure    PackageManager/Build repositories,
+  Settings, Logs and         |               HTTP logs interceptor, Room store
+  LogDetail screens,         |
+  ViewModels, Navigation 3   |
+                 \          /
+               cabitools-sdk-domain          models, repository interfaces, use cases (pure Kotlin)
 ```
 
 Only `Cabitools` and the HTTP logs configuration (`HttpLogsConfig`, `Retention`, `HttpLogsDsl`)
-are public (`explicitApi()` is enabled); everything else is `internal`. `:sdk-no-op` must expose
-exactly the same public API: `./gradlew checkNoOpApi` fails when the two differ.
+are public to host apps (`explicitApi()` is enabled). The layer modules make public only what
+another SDK module uses, and the application module depends on them with `implementation`, so
+none of it reaches host apps. `:cabitools-sdk-application-no-op` must expose exactly the same
+public API: `./gradlew checkNoOpApi` fails when the two differ.

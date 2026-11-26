@@ -21,9 +21,9 @@
 
 ## 5. Application module, docs and checks
 
-- [ ] 5.1 Leave only the public API, `SdkContainer` and `CabitoolsActivity` in the application module, with `HttpLogsConfigTest`, `CabitoolsOpenTest`, `CabitoolsHttpInterceptorTest`, a new `SdkContainer` wiring test, a header rules mapping test and the instrumented `CabitoolsTest`; move Kover exclusions to the modules that own the code. Verify that `./gradlew :cabitools-sdk-application:koverVerify` passes at 90% line and branch coverage
-- [ ] 5.2 Update `CLAUDE.md` (modules, dependency rules, commands) and `sdk/README.md` (now in the application module: integration with the new module names, architecture). Verify that the documented module graph and dependency lines match `settings.gradle.kts` and the sample app
-- [ ] 5.3 Run `./gradlew assembleDebug test :cabitools-sdk-application:koverVerify lint detekt checkNoOpApi` and the instrumented tests on an emulator, and verify that all pass and the public API dump is unchanged
+- [x] 5.1 Leave only the public API, `SdkContainer` and `CabitoolsActivity` in the application module, with `HttpLogsConfigTest`, `CabitoolsOpenTest`, `CabitoolsHttpInterceptorTest`, a new `SdkContainer` wiring test, a header rules mapping test and the instrumented `CabitoolsTest`; move Kover exclusions to the modules that own the code. Verify that `./gradlew :cabitools-sdk-application:koverVerify` passes at 90% line and branch coverage
+- [x] 5.2 Update `CLAUDE.md` (modules, dependency rules, commands) and `sdk/README.md` (now in the application module: integration with the new module names, architecture). Verify that the documented module graph and dependency lines match `settings.gradle.kts` and the sample app
+- [x] 5.3 Run `./gradlew assembleDebug test :cabitools-sdk-application:koverVerify lint detekt checkNoOpApi` and the instrumented tests on an emulator, and verify that all pass and the public API dump is unchanged
 
 ## Workflow follow-up
 

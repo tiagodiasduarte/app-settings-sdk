@@ -6,6 +6,7 @@ import android.content.ContextWrapper
 import android.content.Intent
 import okhttp3.Interceptor
 import pt.tiagodiasduarte.cabitools.sdk.infrastructure.HttpLogs
+import pt.tiagodiasduarte.cabitools.sdk.mapper.toHeaderRules
 
 /**
  * Entry point of the Cabitools SDK.

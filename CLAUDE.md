@@ -13,7 +13,7 @@ Cabitools (named after *cabidela*) is an in-app debug and QA tools screen for my
 - `:cabitools-sdk-application-no-op` (namespace `…sdk.noop`) has the same public API as `:cabitools-sdk-application` (same package and declarations) and does nothing. Host apps use it in production builds. Any public API change must be made in both modules; `./gradlew checkNoOpApi` fails when they differ.
 - `:app` (namespace and application id `pt.tiagodiasduarte.cabitools.sample`, "Cabitools Sample") is a sample host: a Compose `MainActivity` that opens Cabitools and makes HTTP calls through the interceptor. Debug and the minified `qa` build type use `:cabitools-sdk-application`; release uses `:cabitools-sdk-application-no-op`.
 
-Dependency rules: domain ← infrastructure, domain ← presentation, and application → all three. Declarations used by another module are `public` in their module; everything else stays `internal`. All Android modules use the `cabitools_` resource prefix (`resourcePrefix`).
+Dependency rules: domain ← infrastructure, domain ← presentation, and application → all three. Declarations used by another module are `public` in their module; everything else stays `internal`. All Android modules use the `cabitools_` resource prefix (`resourcePrefix`). Model-to-model mapping functions live in each module's `mapper` package (for example `…sdk.presentation.mapper`), one file per source model, as `internal` extension functions.
 
 ## Commands
 

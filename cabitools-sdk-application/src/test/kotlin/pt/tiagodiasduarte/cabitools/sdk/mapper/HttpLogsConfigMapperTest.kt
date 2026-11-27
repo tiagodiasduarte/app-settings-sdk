@@ -1,10 +1,11 @@
-package pt.tiagodiasduarte.cabitools.sdk
+package pt.tiagodiasduarte.cabitools.sdk.mapper
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import pt.tiagodiasduarte.cabitools.sdk.HttpLogsConfig
 import pt.tiagodiasduarte.cabitools.sdk.infrastructure.http.HeaderRules
 
-class HttpLogsConfigMappingTest {
+class HttpLogsConfigMapperTest {
 
     @Test
     fun `given header options when they are mapped then the rules carry the same options`() {

@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import pt.tiagodiasduarte.cabitools.sdk.domain.model.HttpLogItem
 import pt.tiagodiasduarte.cabitools.sdk.domain.repository.HttpLogsRepository
+import pt.tiagodiasduarte.cabitools.sdk.presentation.mapper.toUi
 
 /** One row of the logs list, already formatted. [status] is null when the call failed. */
 internal data class LogItemUi(
@@ -36,22 +36,12 @@ internal class LogsViewModel(
 ) : ViewModel() {
 
     val uiState: StateFlow<LogsUiState> = repository.observeLogs()
-        .map { logs -> LogsUiState(items = logs.map { it.toUi() }, loaded = true) }
+        .map { logs -> LogsUiState(items = logs.map { it.toUi(format) }, loaded = true) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), LogsUiState())
 
     fun clear() {
         viewModelScope.launch { repository.clearLogs() }
     }
-
-    private fun HttpLogItem.toUi() = LogItemUi(
-        id = id,
-        method = method,
-        url = url,
-        time = format.time(startedAt),
-        duration = format.duration(durationMs),
-        size = responseSize?.let(format::size),
-        status = statusCode?.toString(),
-    )
 
     companion object {
         private const val STOP_TIMEOUT_MS = 5_000L
